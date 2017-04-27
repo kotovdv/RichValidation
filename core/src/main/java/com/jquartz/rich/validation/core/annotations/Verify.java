@@ -1,4 +1,4 @@
-package com.kotovdv.rich.validation.core.annotations;
+package com.jquartz.rich.validation.core.annotations;
 
 
 import java.lang.annotation.*;

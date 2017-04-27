@@ -1,6 +1,6 @@
-package com.kotovdv.rich.validation.core.verification;
+package com.jquartz.rich.validation.core.verification;
 
-import com.kotovdv.rich.validation.core.annotations.Verify;
+import com.jquartz.rich.validation.core.annotations.Verify;
 
 /**
  * @author Dmitriy Kotov
