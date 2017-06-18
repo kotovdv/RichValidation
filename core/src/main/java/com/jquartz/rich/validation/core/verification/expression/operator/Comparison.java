@@ -1,7 +1,5 @@
 package com.jquartz.rich.validation.core.verification.expression.operator;
 
-import com.jquartz.rich.validation.core.verification.expression.value.Value;
-
 import javax.annotation.Nonnull;
 
 /**
@@ -9,5 +7,5 @@ import javax.annotation.Nonnull;
  */
 public interface Comparison {
 
-    <T extends Comparable<T>> boolean apply(@Nonnull Value<T> leftValue, @Nonnull Value<T> rightValue);
+    <T extends Comparable<T>> boolean apply(@Nonnull T leftValue, @Nonnull T rightValue);
 }

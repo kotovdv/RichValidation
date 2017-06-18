@@ -3,7 +3,7 @@ package com.jquartz.rich.validation.core;
 import com.jquartz.rich.validation.core.verification.VerificationLogic;
 import com.jquartz.rich.validation.core.verification.VerificationLogicFactory;
 import com.jquartz.rich.validation.core.verification.VerificationResult;
-import com.jquartz.rich.validation.core.verification.VerificationSubject;
+import com.jquartz.rich.validation.core.verification.subjects.VerificationSubject;
 import org.junit.Test;
 
 /**
@@ -15,7 +15,7 @@ public class ApiShowcase {
     public void name() throws Exception {
         VerificationLogicFactory logicFactory = new VerificationLogicFactory();
 
-        VerificationLogic logic = logicFactory.createFor(VerificationSubject.class);
+        VerificationLogic logic = logicFactory.basedOn(VerificationSubject.class);
 
         VerificationSubject subject = new VerificationSubject(20, 15, 10);
 

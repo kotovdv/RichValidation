@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 /**
  * @author Dmitriy Kotov
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Verification {
+public @interface Validation {
 
-    Verify[] value();
+    Validate[] value();
 }

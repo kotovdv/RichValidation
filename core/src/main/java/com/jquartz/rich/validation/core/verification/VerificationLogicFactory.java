@@ -1,12 +1,15 @@
 package com.jquartz.rich.validation.core.verification;
 
+import javax.annotation.Nonnull;
+
 /**
  * @author Dmitriy Kotov
  */
 public class VerificationLogicFactory {
 
-    public VerificationLogic createFor(Class<?> subjectClass) {
+    private final VerificationAnnotationProcessor annotationProcessor = new VerificationAnnotationProcessor();
 
-        return null;
+    public VerificationLogic basedOn(@Nonnull Class<?> subjectClass) {
+        return annotationProcessor.process(subjectClass);
     }
 }
