@@ -1,11 +1,11 @@
 package com.jquartz.rich.validation.core;
 
 import com.jquartz.rich.validation.core.verification.VerificationLogic;
-import com.jquartz.rich.validation.core.verification.builder.MustPartBuilder;
 import com.jquartz.rich.validation.core.verification.subjects.VerificationSubject;
 import org.junit.Test;
 
 import static com.jquartz.rich.validation.core.verification.builder.VerificationLogicBuilder.ensureThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Dmitriy Kotov
@@ -13,19 +13,17 @@ import static com.jquartz.rich.validation.core.verification.builder.Verification
 public class ApiShowcase {
 
     @Test
-    public void name() throws Exception {
-        MustPartBuilder<VerificationSubject> builder = ensureThat(VerificationSubject.class)
-                .field("fieldOne")
-                .isGreaterThan(10)
-                .and()
-                .isGreaterThan(5)
-                .and()
-                .isGreaterThanField("fieldTwo");
+    public void simpleVerificationLogicTest() throws Exception {
+        VerificationSubject subject = new VerificationSubject(15);
 
-
-        VerificationLogic<VerificationSubject> logic = builder
+        VerificationLogic<VerificationSubject> logic = ensureThat(VerificationSubject.class)
+                .field("firstField")
+                .isGreaterThan(10L)
+                .and()
+                .isLessThan(20L)
                 .create();
 
-        VerificationSubject subject = new VerificationSubject(15, 10, 5);
+        assertThat(logic.verify(subject)).isTrue();
     }
 }
+

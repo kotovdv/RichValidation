@@ -6,10 +6,10 @@ import com.jquartz.rich.validation.core.verification.expression.Expression;
 public class MustPartBuilder<T> {
 
     private final TargetPartBuilder<T> targetBuilder;
-    private final Expression<?> appliedExpression;
+    private final Expression<T> appliedExpression;
 
     public MustPartBuilder(TargetPartBuilder<T> targetBuilder,
-                           Expression<?> appliedExpression) {
+                           Expression<T> appliedExpression) {
         this.targetBuilder = targetBuilder;
         this.appliedExpression = appliedExpression;
     }
@@ -26,6 +26,10 @@ public class MustPartBuilder<T> {
     }
 
     public VerificationLogic<T> create() {
-        return null;
+        return new VerificationLogic<>(targetBuilder.extractExpressions());
+    }
+
+    public Expression<T> getAppliedExpression() {
+        return appliedExpression;
     }
 }

@@ -7,20 +7,28 @@ import java.lang.reflect.Field;
 public class FieldPointer<T, S> {
 
     private final Class<S> sourceClass;
-    private final Class<T> fieldClass;
+    private final Class<T> targetClass;
     private final Field field;
 
-    public FieldPointer(Class<S> sourceClass, Class<T> fieldClass, Field field) {
+    public FieldPointer(Class<S> sourceClass, Class<T> targetClass, Field field) {
         this.sourceClass = sourceClass;
-        this.fieldClass = fieldClass;
+        this.targetClass = targetClass;
         this.field = field;
     }
 
     public T resolve(S sourceInstance) {
         try {
-            return fieldClass.cast(field.get(sourceInstance));
+            return targetClass.cast(field.get(sourceInstance));
         } catch (IllegalAccessException e) {
             throw new FailedToExtractFieldValueException(sourceClass, field.getName(), e);
         }
+    }
+
+    public Class<S> getSourceClass() {
+        return sourceClass;
+    }
+
+    public Class<?> getTargetClass() {
+        return targetClass;
     }
 }
