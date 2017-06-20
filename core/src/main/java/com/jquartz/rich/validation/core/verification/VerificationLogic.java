@@ -1,6 +1,6 @@
 package com.jquartz.rich.validation.core.verification;
 
-import com.jquartz.rich.validation.core.verification.expression.LogicExpression;
+import com.jquartz.rich.validation.core.verification.expression.comparison.ComparisonExpression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +8,16 @@ import java.util.List;
 /**
  * @author Dmitriy Kotov
  */
-public class VerificationLogic {
+public class VerificationLogic<T> {
 
-    private final List<LogicExpression> expressions;
+    private final List<ComparisonExpression> expressions;
 
-    public VerificationLogic(List<LogicExpression<?>> expressions) {
+    public VerificationLogic(List<ComparisonExpression<?,?>> expressions) {
         this.expressions = new ArrayList<>(expressions);
     }
 
-    public <T> VerificationResult apply(T instance) {
-        for (LogicExpression expression : expressions) {
+    public VerificationResult apply(T instance) {
+        for (ComparisonExpression expression : expressions) {
 //            expression.apply(instance);
         }
 

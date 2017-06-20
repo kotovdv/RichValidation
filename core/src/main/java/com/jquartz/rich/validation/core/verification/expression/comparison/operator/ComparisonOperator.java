@@ -1,4 +1,4 @@
-package com.jquartz.rich.validation.core.verification.expression.operator;
+package com.jquartz.rich.validation.core.verification.expression.comparison.operator;
 
 import javax.annotation.Nonnull;
 
