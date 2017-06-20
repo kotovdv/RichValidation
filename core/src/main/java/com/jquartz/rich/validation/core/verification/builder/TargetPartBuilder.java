@@ -4,7 +4,6 @@ import com.jquartz.rich.validation.core.api.FieldPointer;
 import com.jquartz.rich.validation.core.api.LiteralPointer;
 import com.jquartz.rich.validation.core.verification.builder.must.PartsJoinedByAndBuilder;
 import com.jquartz.rich.validation.core.verification.expression.Expression;
-import com.jquartz.rich.validation.core.verification.expression.comparison.ComparisonExpression;
 import com.jquartz.rich.validation.core.verification.expression.comparison.factory.ComparisonExpressionLogicFactory;
 import com.jquartz.rich.validation.core.verification.expression.comparison.operator.ComparisonOperator;
 
@@ -41,36 +40,26 @@ public class TargetPartBuilder<T> {
     public <V> MustPartBuilder<T> isLessThan(V value) {
         return is(ComparisonOperator.LESS_THAN, new LiteralPointer<>(value));
     }
-    //TODO GET BACK TO PREVIOUS VARIANT WITH TWO DIFFERENT POINTERS
-    //CREATE SEPARATE CLASS TO RESOLVE ComparisonExpression and ensure type safety among two pointers
 
-    private <V extends Comparable<V>> MustPartBuilder<T> is(ComparisonOperator operator, LiteralPointer<?> pointer) {
-        PartsJoinedByAndBuilder lastPart = this.partsJoinedByOr.peek();
+    private MustPartBuilder<T> is(ComparisonOperator operator, LiteralPointer<?> pointer) {
+        return addExpression(logicFactory.create(targetFieldPointer, operator, pointer));
+    }
 
-        ComparisonExpression<V, T> expression = logicFactory.create(targetFieldPointer, operator, pointer);
+    private MustPartBuilder<T> is(ComparisonOperator operator, FieldPointer<?, T> pointer) {
+        return addExpression(logicFactory.create(targetFieldPointer, operator, pointer));
+    }
+
+    private MustPartBuilder<T> addExpression(Expression<T> expression) {
+        PartsJoinedByAndBuilder<T> lastPart = this.partsJoinedByOr.peek();
+
         MustPartBuilder<T> newMustPart = new MustPartBuilder<>(this, expression);
         lastPart.addExpression(newMustPart);
 
         return newMustPart;
     }
 
-
-    private <S> MustPartBuilder<T> is(ComparisonOperator operator, FieldPointer<?, T> pointer) {
-        PartsJoinedByAndBuilder lastPart = this.partsJoinedByOr.peek();
-//        Value<?> leftValue = targetFieldPointer.resolve(targetClass);
-//        Value<?> rightValue = pointer.resolve(targetClass);
-//        ComparisonExpression expression = new ComparisonExpression(leftValue,
-//                operator,
-//                rightValue);
-//
-//        MustPartBuilder<T> newMustPart = new MustPartBuilder<>(this, expression);
-//        lastPart.addExpression(newMustPart);
-
-        return null;
-    }
-
     void newOrPart() {
-        this.partsJoinedByOr.push(new PartsJoinedByAndBuilder());
+        this.partsJoinedByOr.push(new PartsJoinedByAndBuilder<>());
     }
 
     Collection<Expression<T>> extractExpressions() {

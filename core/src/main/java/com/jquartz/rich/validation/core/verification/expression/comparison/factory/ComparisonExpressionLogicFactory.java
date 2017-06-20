@@ -4,10 +4,10 @@ import com.jquartz.rich.validation.core.api.FieldPointer;
 import com.jquartz.rich.validation.core.api.LiteralPointer;
 import com.jquartz.rich.validation.core.exception.api.IncomparableClassesException;
 import com.jquartz.rich.validation.core.verification.expression.comparison.ComparisonExpression;
-import com.jquartz.rich.validation.core.verification.expression.comparison.factory.util.ComparableValueTransformer;
 import com.jquartz.rich.validation.core.verification.expression.comparison.factory.util.PrimitiveToWrapperConverter;
 import com.jquartz.rich.validation.core.verification.expression.comparison.factory.util.Transformation;
 import com.jquartz.rich.validation.core.verification.expression.comparison.factory.util.TransformationLogic;
+import com.jquartz.rich.validation.core.verification.expression.comparison.factory.util.TransformedComparableValue;
 import com.jquartz.rich.validation.core.verification.expression.comparison.operator.ComparisonOperator;
 import com.jquartz.rich.validation.core.verification.expression.comparison.value.FieldValue;
 import com.jquartz.rich.validation.core.verification.expression.comparison.value.LiteralValue;
@@ -24,15 +24,25 @@ public class ComparisonExpressionLogicFactory {
     private final PrimitiveToWrapperConverter toWrapperConverter = new PrimitiveToWrapperConverter();
 
     public <T extends Comparable<T>, S> ComparisonExpression<T, S> create(FieldPointer<?, S> left, ComparisonOperator operator, LiteralPointer<?> right) {
-        Class<?> leftPointerClass = left.getTargetClass();
-        Class<?> rightPointerClass = right.getTargetClass().orElse(leftPointerClass);
-
-        TransformationLogic<T> logic = generateTransformationLogic(leftPointerClass, rightPointerClass);
+        TransformationLogic<T> logic = generateTransformationLogic(
+                left.getTargetClass(),
+                right.getTargetClass().orElse(left.getTargetClass()));
 
         return new ComparisonExpression<>(
-                new ComparableValueTransformer<>(new FieldValue<>(left), logic.getLeftTransformation()),
+                new TransformedComparableValue<>(new FieldValue<>(left), logic.getLeftTransformation()),
                 operator,
-                new ComparableValueTransformer<>(new LiteralValue<>(right), logic.getRightTransformation()));
+                new TransformedComparableValue<>(new LiteralValue<>(right), logic.getRightTransformation()));
+    }
+
+    public <T extends Comparable<T>, S> ComparisonExpression<T, S> create(FieldPointer<?, S> left, ComparisonOperator operator, FieldPointer<?, S> right) {
+        TransformationLogic<T> logic = generateTransformationLogic(
+                left.getTargetClass(),
+                right.getTargetClass());
+
+        return new ComparisonExpression<>(
+                new TransformedComparableValue<>(new FieldValue<>(left), logic.getLeftTransformation()),
+                operator,
+                new TransformedComparableValue<>(new FieldValue<>(right), logic.getRightTransformation()));
     }
 
     private <T extends Comparable<T>> TransformationLogic<T> generateTransformationLogic(final Class<?> initialLeftClass, final Class<?> initialRightClass) {
@@ -57,8 +67,8 @@ public class ComparisonExpressionLogicFactory {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends Comparable<T>> TransformationLogic<T> emptyTransformation(Class<?> left) {
-        return new TransformationLogic(new Transformation<>(left), new Transformation<>(left));
+    private <T extends Comparable<T>> TransformationLogic<T> emptyTransformation(Class<?> targetClass) {
+        return new TransformationLogic(new Transformation<>(targetClass), new Transformation<>(targetClass));
     }
 
     @SuppressWarnings("unchecked")
