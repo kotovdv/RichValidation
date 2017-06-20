@@ -5,7 +5,7 @@ package com.jquartz.rich.validation.core.verification.subjects;
  */
 public class VerificationSubject {
 
-    private final Long firstField;
+    private final long firstField;
 
     public VerificationSubject(long firstField) {
         this.firstField = firstField;

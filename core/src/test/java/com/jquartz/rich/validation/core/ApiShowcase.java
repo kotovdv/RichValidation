@@ -18,9 +18,9 @@ public class ApiShowcase {
 
         VerificationLogic<VerificationSubject> logic = ensureThat(VerificationSubject.class)
                 .field("firstField")
-                .isGreaterThan(10L)
+                .isGreaterThan(10)
                 .and()
-                .isLessThan(20L)
+                .isLessThan(20)
                 .create();
 
         assertThat(logic.verify(subject)).isTrue();

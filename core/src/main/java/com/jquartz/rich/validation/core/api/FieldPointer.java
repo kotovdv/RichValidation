@@ -16,9 +16,10 @@ public class FieldPointer<T, S> {
         this.field = field;
     }
 
+    @SuppressWarnings("unchecked")
     public T resolve(S sourceInstance) {
         try {
-            return targetClass.cast(field.get(sourceInstance));
+            return (T) field.get(sourceInstance);
         } catch (IllegalAccessException e) {
             throw new FailedToExtractFieldValueException(sourceClass, field.getName(), e);
         }
