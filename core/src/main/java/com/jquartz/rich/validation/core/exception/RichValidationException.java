@@ -1,4 +1,4 @@
-package com.jquartz.rich.validation.core.exception.api;
+package com.jquartz.rich.validation.core.exception;
 
 public class RichValidationException extends RuntimeException {
 

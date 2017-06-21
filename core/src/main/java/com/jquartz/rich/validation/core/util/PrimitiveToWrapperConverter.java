@@ -1,7 +1,7 @@
 package com.jquartz.rich.validation.core.util;
 
 import com.google.common.collect.ImmutableMap;
-import com.jquartz.rich.validation.core.exception.api.NoWrapperForPrimitiveTypeFoundException;
+import com.jquartz.rich.validation.core.util.exception.NoWrapperForPrimitiveTypeFoundException;
 
 /**
  * @author Dmitriy Kotov

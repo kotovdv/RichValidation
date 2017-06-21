@@ -1,6 +1,6 @@
 package com.jquartz.rich.validation.core.pointer;
 
-import com.jquartz.rich.validation.core.exception.api.FailedToExtractFieldValueException;
+import com.jquartz.rich.validation.core.pointer.exception.FailedToExtractFieldValueException;
 
 import java.lang.reflect.Field;
 

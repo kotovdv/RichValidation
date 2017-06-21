@@ -1,4 +1,6 @@
-package com.jquartz.rich.validation.core.exception.api;
+package com.jquartz.rich.validation.core.expression.comparison.factory.exception;
+
+import com.jquartz.rich.validation.core.exception.RichValidationException;
 
 /**
  * @author Dmitriy Kotov

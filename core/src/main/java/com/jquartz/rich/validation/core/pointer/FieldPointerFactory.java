@@ -1,6 +1,6 @@
 package com.jquartz.rich.validation.core.pointer;
 
-import com.jquartz.rich.validation.core.exception.api.InvalidFieldPointerException;
+import com.jquartz.rich.validation.core.pointer.exception.InvalidFieldPointerException;
 
 import java.lang.reflect.Field;
 

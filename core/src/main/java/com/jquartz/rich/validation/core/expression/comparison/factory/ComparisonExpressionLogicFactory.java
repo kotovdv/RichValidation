@@ -1,8 +1,8 @@
 package com.jquartz.rich.validation.core.expression.comparison.factory;
 
-import com.jquartz.rich.validation.core.exception.api.ClassIsNotComparableException;
-import com.jquartz.rich.validation.core.exception.api.IncomparableClassesException;
 import com.jquartz.rich.validation.core.expression.comparison.ComparisonExpression;
+import com.jquartz.rich.validation.core.expression.comparison.factory.exception.IncomparableClassesException;
+import com.jquartz.rich.validation.core.expression.comparison.factory.exception.NotComparableClassException;
 import com.jquartz.rich.validation.core.expression.comparison.factory.transformation.Transformation;
 import com.jquartz.rich.validation.core.expression.comparison.factory.transformation.TransformationLogic;
 import com.jquartz.rich.validation.core.expression.comparison.factory.transformation.TransformedComparableValue;
@@ -71,11 +71,11 @@ public class ComparisonExpressionLogicFactory {
 
     private void ensureThatClassesImplementComparable(Class<?> left, Class<?> right) {
         if (isNotComparable(left)) {
-            throw new ClassIsNotComparableException(left);
+            throw new NotComparableClassException(left);
         }
 
         if (isNotComparable(right)) {
-            throw new ClassIsNotComparableException(right);
+            throw new NotComparableClassException(right);
         }
     }
 

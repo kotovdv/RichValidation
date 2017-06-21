@@ -1,4 +1,6 @@
-package com.jquartz.rich.validation.core.exception.api;
+package com.jquartz.rich.validation.core.pointer.exception;
+
+import com.jquartz.rich.validation.core.exception.RichValidationException;
 
 public class FailedToExtractFieldValueException extends RichValidationException {
 
