@@ -2,6 +2,7 @@ package com.jquartz.rich.validation.core.verification.builder;
 
 import com.jquartz.rich.validation.core.verification.VerificationLogic;
 import com.jquartz.rich.validation.core.verification.builder.must.LogicalOrJunctionBuilder;
+import com.jquartz.rich.validation.core.verification.expression.Expression;
 
 public class VerificationLogicHolder<T> {
 
@@ -11,8 +12,8 @@ public class VerificationLogicHolder<T> {
         orJunction.startNewOrJunction();
     }
 
-    public void appendLogic(MustPartBuilder<T> mustPartBuilder) {
-        orJunction.getLatestPart().addExpression(mustPartBuilder);
+    public void appendExpression(Expression<T> expression) {
+        orJunction.getLatestPart().addExpression(expression);
     }
 
     public VerificationLogic<T> createLogic() {

@@ -77,8 +77,8 @@ public class TargetPartBuilder<T> {
     }
 
     private MustPartBuilder<T> addExpression(Expression<T> expression) {
-        MustPartBuilder<T> newMustPart = new MustPartBuilder<>(this, expression, holder);
-        holder.appendLogic(newMustPart);
+        MustPartBuilder<T> newMustPart = new MustPartBuilder<>(this, holder);
+        holder.appendExpression(expression);
 
         return newMustPart;
     }
