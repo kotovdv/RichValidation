@@ -1,13 +1,11 @@
 package com.jquartz.rich.validation.core.verification.builder;
 
-import com.jquartz.rich.validation.core.api.FieldPointer;
-
 import javax.annotation.Nonnull;
 
 public class VerificationLogicBuilder<T> {
 
     private final Class<T> targetClass;
-    private final FieldPointerFactory pointerFactory = new FieldPointerFactory();
+    private VerificationLogicHolder<T> verificationLogicHolder = new VerificationLogicHolder<>();
 
     public static <T> VerificationLogicBuilder<T> ensureThat(@Nonnull Class<T> targetClass) {
         return new VerificationLogicBuilder<>(targetClass);
@@ -18,8 +16,6 @@ public class VerificationLogicBuilder<T> {
     }
 
     public TargetPartBuilder<T> field(@Nonnull String fieldName) {
-        FieldPointer<?, T> targetPointer = pointerFactory.createPointer(targetClass, fieldName);
-
-        return new TargetPartBuilder<>(targetClass, targetPointer);
+        return new TargetPartBuilder<>(targetClass, fieldName, verificationLogicHolder);
     }
 }

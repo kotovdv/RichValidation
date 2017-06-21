@@ -7,26 +7,28 @@ public class MustPartBuilder<T> {
 
     private final TargetPartBuilder<T> targetBuilder;
     private final Expression<T> appliedExpression;
+    private final VerificationLogicHolder<T> holder;
 
     public MustPartBuilder(TargetPartBuilder<T> targetBuilder,
-                           Expression<T> appliedExpression) {
+                           Expression<T> appliedExpression,
+                           VerificationLogicHolder<T> holder) {
         this.targetBuilder = targetBuilder;
         this.appliedExpression = appliedExpression;
+        this.holder = holder;
     }
 
-    //TODO different types of must parts
     public TargetPartBuilder<T> and() {
         return targetBuilder;
     }
 
     public TargetPartBuilder<T> or() {
-        targetBuilder.newOrPart();
+        holder.startNewOrJunction();
 
         return targetBuilder;
     }
 
     public VerificationLogic<T> create() {
-        return new VerificationLogic<>(targetBuilder.extractExpressions());
+        return holder.createLogic();
     }
 
     public Expression<T> getAppliedExpression() {
