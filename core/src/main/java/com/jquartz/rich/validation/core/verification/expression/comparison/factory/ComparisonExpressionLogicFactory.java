@@ -2,6 +2,7 @@ package com.jquartz.rich.validation.core.verification.expression.comparison.fact
 
 import com.jquartz.rich.validation.core.api.FieldPointer;
 import com.jquartz.rich.validation.core.api.LiteralPointer;
+import com.jquartz.rich.validation.core.exception.api.ClassIsNotComparableException;
 import com.jquartz.rich.validation.core.exception.api.IncomparableClassesException;
 import com.jquartz.rich.validation.core.verification.expression.comparison.ComparisonExpression;
 import com.jquartz.rich.validation.core.verification.expression.comparison.factory.util.PrimitiveToWrapperConverter;
@@ -23,7 +24,9 @@ public class ComparisonExpressionLogicFactory {
 
     private final PrimitiveToWrapperConverter toWrapperConverter = new PrimitiveToWrapperConverter();
 
-    public <T extends Comparable<T>, S> ComparisonExpression<T, S> create(FieldPointer<?, S> left, ComparisonOperator operator, LiteralPointer<?> right) {
+    public <T extends Comparable<T>, S> ComparisonExpression<T, S> create(FieldPointer<?, S> left,
+                                                                          ComparisonOperator operator,
+                                                                          LiteralPointer<?> right) {
         TransformationLogic<T> logic = generateTransformationLogic(
                 left.getTargetClass(),
                 right.getTargetClass().orElse(left.getTargetClass()));
@@ -31,7 +34,8 @@ public class ComparisonExpressionLogicFactory {
         return new ComparisonExpression<>(
                 new TransformedComparableValue<>(new FieldValue<>(left), logic.getLeftTransformation()),
                 operator,
-                new TransformedComparableValue<>(new LiteralValue<>(right), logic.getRightTransformation()));
+                new TransformedComparableValue<>(new LiteralValue<>(right), logic.getRightTransformation())
+        );
     }
 
     public <T extends Comparable<T>, S> ComparisonExpression<T, S> create(FieldPointer<?, S> left, ComparisonOperator operator, FieldPointer<?, S> right) {
@@ -42,16 +46,15 @@ public class ComparisonExpressionLogicFactory {
         return new ComparisonExpression<>(
                 new TransformedComparableValue<>(new FieldValue<>(left), logic.getLeftTransformation()),
                 operator,
-                new TransformedComparableValue<>(new FieldValue<>(right), logic.getRightTransformation()));
+                new TransformedComparableValue<>(new FieldValue<>(right), logic.getRightTransformation())
+        );
     }
 
     private <T extends Comparable<T>> TransformationLogic<T> generateTransformationLogic(final Class<?> initialLeftClass, final Class<?> initialRightClass) {
         Class<?> left = wrapPrimitive(initialLeftClass);
         Class<?> right = wrapPrimitive(initialRightClass);
 
-        if (isNotComparable(left) || isNotComparable(right)) {
-            throw new RuntimeException("Not comparable classes"); //TODO think about dis
-        }
+        ensureThatClassesImplementComparable(left, right);
 
         if (left.equals(right)) {
             return emptyTransformation(left);
@@ -59,11 +62,21 @@ public class ComparisonExpressionLogicFactory {
 
         if (Number.class.isAssignableFrom(left)) {
             if (Number.class.isAssignableFrom(right)) {
-                return transformBothToLong();
+                return transformToLong();
             }
         }
 
         throw new IncomparableClassesException(initialLeftClass, initialRightClass);
+    }
+
+    private void ensureThatClassesImplementComparable(Class<?> left, Class<?> right) {
+        if (isNotComparable(left)) {
+            throw new ClassIsNotComparableException(left);
+        }
+
+        if (isNotComparable(right)) {
+            throw new ClassIsNotComparableException(right);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -72,7 +85,7 @@ public class ComparisonExpressionLogicFactory {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends Comparable<T>> TransformationLogic<T> transformBothToLong() {
+    private <T extends Comparable<T>> TransformationLogic<T> transformToLong() {
         List<Function<?, ?>> leftOperandTransformation = new LinkedList<>();
         List<Function<?, ?>> rightOperandTransformation = new LinkedList<>();
 

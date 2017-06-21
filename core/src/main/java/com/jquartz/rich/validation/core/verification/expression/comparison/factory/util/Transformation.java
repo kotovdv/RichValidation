@@ -31,4 +31,8 @@ public class Transformation<T> {
 
         return resultingType.cast(currentValue);
     }
+
+    public boolean isEmpty(){
+        return transformationQueue.isEmpty();
+    }
 }

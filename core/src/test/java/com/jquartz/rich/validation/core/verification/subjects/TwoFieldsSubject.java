@@ -12,4 +12,12 @@ public class TwoFieldsSubject {
         this.firstField = firstField;
         this.secondField = secondField;
     }
+
+    public static String getFirstFieldName() {
+        return "firstField";
+    }
+
+    public static String getSecondFieldName() {
+        return "secondField";
+    }
 }

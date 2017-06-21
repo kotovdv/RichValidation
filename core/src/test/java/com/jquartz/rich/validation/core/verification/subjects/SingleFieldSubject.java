@@ -10,4 +10,8 @@ public class SingleFieldSubject {
     public SingleFieldSubject(long firstField) {
         this.firstField = firstField;
     }
+
+    public static String getFieldName() {
+        return "firstField";
+    }
 }

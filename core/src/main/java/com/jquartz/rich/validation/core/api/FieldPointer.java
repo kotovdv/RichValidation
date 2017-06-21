@@ -29,7 +29,7 @@ public class FieldPointer<T, S> {
         return sourceClass;
     }
 
-    public Class<?> getTargetClass() {
+    public Class<T> getTargetClass() {
         return targetClass;
     }
 }

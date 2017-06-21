@@ -29,16 +29,48 @@ public class TargetPartBuilder<T> {
         return is(ComparisonOperator.GREATER_THAN, pointerFactory.createPointer(targetClass, fieldName));
     }
 
+    public MustPartBuilder<T> isGreaterOrEqualToField(String fieldName) {
+        return is(ComparisonOperator.GREATER_OR_EQUAL_TO, pointerFactory.createPointer(targetClass, fieldName));
+    }
+
     public MustPartBuilder<T> isLessThanField(String fieldName) {
         return is(ComparisonOperator.LESS_THAN, pointerFactory.createPointer(targetClass, fieldName));
+    }
+
+    public MustPartBuilder<T> isLessOrEqualToField(String fieldName) {
+        return is(ComparisonOperator.LESS_OR_EQUAL_TO, pointerFactory.createPointer(targetClass, fieldName));
+    }
+
+    public MustPartBuilder<T> isEqualToField(String fieldName) {
+        return is(ComparisonOperator.EQUAL_TO, pointerFactory.createPointer(targetClass, fieldName));
+    }
+
+    public MustPartBuilder<T> isNotEqualToField(String fieldName) {
+        return is(ComparisonOperator.NOT_EQUAL_TO, pointerFactory.createPointer(targetClass, fieldName));
     }
 
     public <V> MustPartBuilder<T> isGreaterThan(V value) {
         return is(ComparisonOperator.GREATER_THAN, new LiteralPointer<>(value));
     }
 
+    public <V> MustPartBuilder<T> isGreaterOrEqualTo(V value) {
+        return is(ComparisonOperator.GREATER_OR_EQUAL_TO, new LiteralPointer<>(value));
+    }
+
     public <V> MustPartBuilder<T> isLessThan(V value) {
         return is(ComparisonOperator.LESS_THAN, new LiteralPointer<>(value));
+    }
+
+    public <V> MustPartBuilder<T> isLessOrEqualTo(V value) {
+        return is(ComparisonOperator.LESS_OR_EQUAL_TO, new LiteralPointer<>(value));
+    }
+
+    public <V> MustPartBuilder<T> isEqualTo(V value) {
+        return is(ComparisonOperator.EQUAL_TO, new LiteralPointer<>(value));
+    }
+
+    public <V> MustPartBuilder<T> isNotEqualTo(V value) {
+        return is(ComparisonOperator.NOT_EQUAL_TO, new LiteralPointer<>(value));
     }
 
     private MustPartBuilder<T> is(ComparisonOperator operator, LiteralPointer<?> pointer) {
