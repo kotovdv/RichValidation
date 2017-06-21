@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jquartz.rich.verification</groupId>
+    <groupId>com.jquartz.rich.validation</groupId>
     <artifactId>bom</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
@@ -25,6 +25,26 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.8.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.java</groupId>
+                <artifactId>junit-dataprovider</artifactId>
+                <version>1.12.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>3.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>21.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
