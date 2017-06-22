@@ -1,6 +1,8 @@
 # RichValidation
 [![Build Status](https://travis-ci.org/kotovdv/RichValidation.svg?branch=development)](https://travis-ci.org/kotovdv/RichValidation)
-[![codecov.io](https://codecov.io/gh/kotovdv/RichValidation/coverage.png)](https://codecov.io/gh/kotovdv/RichValidation/coverage.png)
+[![codecov.io](https://codecov.io/github/kotovdv/RichValidation/coverage.svg?branch=development)](https://codecov.io/github/kotovdv/RichValidation)
+
+
 
 ## About
 
