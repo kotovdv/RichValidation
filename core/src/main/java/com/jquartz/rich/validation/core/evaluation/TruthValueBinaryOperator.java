@@ -17,7 +17,7 @@ public enum TruthValueBinaryOperator {
                 .put(unorderedPairOf(FALSE, FALSE), FALSE)
                 .put(unorderedPairOf(TRUE, FALSE), FALSE)
                 .put(unorderedPairOf(TRUE, UNKNOWN), UNKNOWN)
-                .put(unorderedPairOf(FALSE, UNKNOWN), UNKNOWN)
+                .put(unorderedPairOf(FALSE, UNKNOWN), FALSE)
                 .put(unorderedPairOf(UNKNOWN, UNKNOWN), UNKNOWN)
                 .build();
 
