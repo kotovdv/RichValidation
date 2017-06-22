@@ -1,6 +1,6 @@
 package com.jquartz.rich.validation.core.expression.junction.builder;
 
-import com.jquartz.rich.validation.core.expression.junction.ExpressionsJunction;
+import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.junction.LogicalOrJunction;
 
 import java.util.Deque;
@@ -23,7 +23,11 @@ public class LogicalOrJunctionBuilder<T> {
         partsJoinedByOr.push(new LogicalAndJunctionBuilder<>());
     }
 
-    public ExpressionsJunction<T> build() {
+    public Expression<T> build() {
+        if (partsJoinedByOr.isEmpty()) {
+            throw new UnableToConstructEmptyJunctionException();
+        }
+
         return new LogicalOrJunction<>(partsJoinedByOr.stream()
                 .map(LogicalAndJunctionBuilder::build)
                 .collect(toList())

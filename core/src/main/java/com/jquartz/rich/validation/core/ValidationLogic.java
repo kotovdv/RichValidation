@@ -1,19 +1,20 @@
 package com.jquartz.rich.validation.core;
 
-import com.jquartz.rich.validation.core.expression.junction.ExpressionsJunction;
+import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.expression.Expression;
 
 /**
  * @author Dmitriy Kotov
  */
 public class ValidationLogic<T> {
 
-    private final ExpressionsJunction<T> junction;
+    private final Expression<T> expression;
 
-    public ValidationLogic(ExpressionsJunction<T> junction) {
-        this.junction = junction;
+    public ValidationLogic(Expression<T> expression) {
+        this.expression = expression;
     }
 
-    public boolean verify(T instance) {
-        return junction.verify(instance);
+    public TruthValue verify(T instance) {
+        return expression.apply(instance);
     }
 }

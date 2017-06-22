@@ -1,7 +1,6 @@
 package com.jquartz.rich.validation.core.expression.junction.builder;
 
 import com.jquartz.rich.validation.core.expression.Expression;
-import com.jquartz.rich.validation.core.expression.junction.ExpressionsJunction;
 import com.jquartz.rich.validation.core.expression.junction.LogicalAndJunction;
 
 import java.util.ArrayList;
@@ -15,7 +14,11 @@ public class LogicalAndJunctionBuilder<T> {
         this.expressions.add(mustPartBuilder);
     }
 
-    public ExpressionsJunction<T> build() {
+    public Expression<T> build() {
+        if (expressions.isEmpty()) {
+            throw new UnableToConstructEmptyJunctionException();
+        }
+
         return new LogicalAndJunction<>(new ArrayList<>(expressions));
     }
 }
