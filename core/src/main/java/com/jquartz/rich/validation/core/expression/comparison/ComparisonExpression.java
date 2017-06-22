@@ -1,5 +1,6 @@
 package com.jquartz.rich.validation.core.expression.comparison;
 
+import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
 import com.jquartz.rich.validation.core.expression.comparison.value.ComparableValue;
@@ -24,11 +25,18 @@ public class ComparisonExpression<T extends Comparable<T>, S> implements Express
     }
 
     @Override
-    public boolean apply(@Nonnull S subject) {
-        return operator.apply(
-                this.left.get(subject),
-                this.right.get(subject)
-        );
+    public TruthValue apply(@Nonnull S subject) {
+        T leftValue = this.left.get(subject);
+        T rightValue = this.right.get(subject);
+
+        if (leftValue == null || rightValue == null) {
+            return TruthValue.UNKNOWN;
+        }
+
+        return operator.apply(leftValue, rightValue)
+                ? TruthValue.TRUE
+                : TruthValue.FALSE;
+
     }
 
     @Override

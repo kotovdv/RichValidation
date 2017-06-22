@@ -1,28 +1,15 @@
 package com.jquartz.rich.validation.core.expression.junction;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
+import com.jquartz.rich.validation.core.expression.Expression;
+
 import java.util.Collection;
-import java.util.List;
 
-import static java.util.Collections.emptyList;
+import static com.jquartz.rich.validation.core.evaluation.TruthValue.FALSE;
+import static com.jquartz.rich.validation.core.evaluation.TruthValueBinaryOperator.OR;
 
-public class LogicalOrJunction<T> implements ExpressionsJunction<T> {
+public class LogicalOrJunction<T> extends LogicalOperatorJunction<T> {
 
-    private List<ExpressionsJunction<T>> expressionChunks = new ArrayList<>();
-
-    public LogicalOrJunction(Collection<ExpressionsJunction<T>> expressionChunks) {
-        this.expressionChunks.addAll(expressionChunks != null ? expressionChunks : emptyList());
-    }
-
-    @Override
-    public boolean verify(@Nonnull T instance) {
-        boolean result = false;
-
-        for (ExpressionsJunction<T> expression : expressionChunks) {
-            result |= expression.verify(instance);
-        }
-
-        return result;
+    public LogicalOrJunction(Collection<Expression<T>> junctions) {
+        super(junctions, OR, FALSE);
     }
 }

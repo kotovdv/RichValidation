@@ -25,14 +25,13 @@ public class Transformation<T> {
 
     public <V> T applyTransformation(V initialValue) {
         Object currentValue = initialValue;
-        for (Function<Object, Object> function : transformationQueue) {
-            currentValue = function.apply(currentValue);
+
+        if (currentValue != null) {
+            for (Function<Object, Object> function : transformationQueue) {
+                currentValue = function.apply(currentValue);
+            }
         }
 
         return resultingType.cast(currentValue);
-    }
-
-    public boolean isEmpty(){
-        return transformationQueue.isEmpty();
     }
 }
