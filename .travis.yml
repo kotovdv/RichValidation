@@ -1,3 +1,4 @@
+sudo: false
 language: java
 
 jdk:
@@ -8,3 +9,6 @@ install: mvn install -B
 branches:
   only:
     - development
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
