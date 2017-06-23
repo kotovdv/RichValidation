@@ -1,10 +1,10 @@
 package com.jquartz.rich.validation.core.api.dsl;
 
-import com.jquartz.rich.validation.core.ValidationLogic;
+import com.jquartz.rich.validation.core.Rule;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.junction.builder.LogicalOrJunctionBuilder;
 
-class ValidationLogicBuilder<T> {
+class RuleLogicBuilder<T> {
 
     private LogicalOrJunctionBuilder<T> orJunction = new LogicalOrJunctionBuilder<>();
 
@@ -16,7 +16,7 @@ class ValidationLogicBuilder<T> {
         orJunction.getLatestPart().addExpression(expression);
     }
 
-    public ValidationLogic<T> build() {
-        return new ValidationLogic<>(orJunction.build());
+    public Rule<T> build() {
+        return new Rule<>(orJunction.build());
     }
 }

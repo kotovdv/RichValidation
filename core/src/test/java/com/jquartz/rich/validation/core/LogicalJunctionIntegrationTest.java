@@ -8,7 +8,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.jquartz.rich.validation.core.api.dsl.RichValidationBuilder.ensureThat;
+import static com.jquartz.rich.validation.core.api.dsl.RuleBuilder.ensureThat;
 import static com.jquartz.rich.validation.core.evaluation.TruthValue.FALSE;
 import static com.jquartz.rich.validation.core.evaluation.TruthValue.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,28 +20,28 @@ public class LogicalJunctionIntegrationTest {
 
     @DataProvider
     public static Object[][] logicalJunctionScenarios() {
-        ValidationLogic<SingleFieldSubject> isEqualToOneOfTwoNumbers = ensureThat(SingleFieldSubject.class)
+        Rule<SingleFieldSubject> isEqualToOneOfTwoNumbers = ensureThat(SingleFieldSubject.class)
                 .field(FIELD)
                 .isEqualTo(10)
                 .or()
                 .isEqualTo(20)
                 .build();
 
-        ValidationLogic<SingleFieldSubject> isInRangeBetween = ensureThat(SingleFieldSubject.class)
+        Rule<SingleFieldSubject> isInRangeBetween = ensureThat(SingleFieldSubject.class)
                 .field(FIELD)
                 .isGreaterOrEqualTo(10)
                 .and()
                 .isLessOrEqualTo(20)
                 .build();
 
-        ValidationLogic<SingleFieldSubject> isInImpossibleRange = ensureThat(SingleFieldSubject.class)
+        Rule<SingleFieldSubject> isInImpossibleRange = ensureThat(SingleFieldSubject.class)
                 .field(FIELD)
                 .isGreaterThan(20)
                 .and()
                 .isLessThan(10)
                 .build();
 
-        ValidationLogic<SingleFieldSubject> isInNowPossibleRange = ensureThat(SingleFieldSubject.class)
+        Rule<SingleFieldSubject> isInNowPossibleRange = ensureThat(SingleFieldSubject.class)
                 .field(FIELD)
                 .isGreaterOrEqualTo(20)
                 .or()
@@ -74,7 +74,7 @@ public class LogicalJunctionIntegrationTest {
 
     @Test
     @UseDataProvider("logicalJunctionScenarios")
-    public void testLiteralComparisonOperations(ValidationLogic<SingleFieldSubject> logic, int fieldValue, TruthValue expectedResult) throws Exception {
-        assertThat(logic.verify(new SingleFieldSubject(fieldValue))).isEqualTo(expectedResult);
+    public void testLiteralComparisonOperations(Rule<SingleFieldSubject> rule, int fieldValue, TruthValue expectedResult) throws Exception {
+        assertThat(rule.validate(new SingleFieldSubject(fieldValue))).isEqualTo(expectedResult);
     }
 }

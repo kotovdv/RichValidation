@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static com.jquartz.rich.validation.core.api.dsl.RichValidationBuilder.ensureThat;
+import static com.jquartz.rich.validation.core.api.dsl.RuleBuilder.ensureThat;
 import static com.jquartz.rich.validation.core.subject.FloatingPointIntegrationTestSubject.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +22,7 @@ public class FloatingPointComparisonIntegrationTest {
 
     @DataProvider
     public static Object[][] floatingPointScenarios() {
-        ValidationLogic<FloatingPointIntegrationTestSubject> firstFieldLogic =
+        Rule<FloatingPointIntegrationTestSubject> firstFieldRule =
                 ensureThat(FloatingPointIntegrationTestSubject.class)
                         .field(FIRST_FIELD)
                         .isGreaterThanField(SECOND_FIELD)
@@ -30,7 +30,7 @@ public class FloatingPointComparisonIntegrationTest {
                         .isGreaterThanField(THIRD_FIELD)
                         .build();
 
-        ValidationLogic<FloatingPointIntegrationTestSubject> secondFieldLogic =
+        Rule<FloatingPointIntegrationTestSubject> secondFieldRule =
                 ensureThat(FloatingPointIntegrationTestSubject.class)
                         .field(SECOND_FIELD)
                         .isGreaterThanField(THIRD_FIELD)
@@ -38,7 +38,7 @@ public class FloatingPointComparisonIntegrationTest {
                         .isLessThanField(FIRST_FIELD)
                         .build();
 
-        ValidationLogic<FloatingPointIntegrationTestSubject> thirdFieldLogic =
+        Rule<FloatingPointIntegrationTestSubject> thirdFieldRule =
                 ensureThat(FloatingPointIntegrationTestSubject.class)
                         .field(THIRD_FIELD)
                         .isLessThanField(SECOND_FIELD)
@@ -46,7 +46,7 @@ public class FloatingPointComparisonIntegrationTest {
                         .isLessThanField(FIRST_FIELD)
                         .build();
 
-        List<ValidationLogic<FloatingPointIntegrationTestSubject>> rules = Arrays.asList(firstFieldLogic, secondFieldLogic, thirdFieldLogic);
+        List<Rule<FloatingPointIntegrationTestSubject>> rules = Arrays.asList(firstFieldRule, secondFieldRule, thirdFieldRule);
         return new Object[][]{
                 {rules, new FloatingPointIntegrationTestSubject(new BigDecimal("0.1"), 0.01D, 0.001F)},
                 {rules, new FloatingPointIntegrationTestSubject(new BigDecimal("0.333"), 0.33, 0.3F)},
@@ -61,9 +61,9 @@ public class FloatingPointComparisonIntegrationTest {
 
     @Test
     @UseDataProvider("floatingPointScenarios")
-    public void testFloatingPointComparisons(Collection<ValidationLogic<FloatingPointIntegrationTestSubject>> rules, FloatingPointIntegrationTestSubject subject) throws Exception {
-        for (ValidationLogic<FloatingPointIntegrationTestSubject> rule : rules) {
-            assertThat(rule.verify(subject)).isEqualTo(TruthValue.TRUE);
+    public void testFloatingPointComparisons(Collection<Rule<FloatingPointIntegrationTestSubject>> rules, FloatingPointIntegrationTestSubject subject) throws Exception {
+        for (Rule<FloatingPointIntegrationTestSubject> rule : rules) {
+            assertThat(rule.validate(subject)).isEqualTo(TruthValue.TRUE);
         }
     }
 }

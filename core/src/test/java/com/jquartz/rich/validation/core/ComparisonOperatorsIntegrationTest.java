@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 
 import java.math.BigInteger;
 
-import static com.jquartz.rich.validation.core.api.dsl.RichValidationBuilder.ensureThat;
+import static com.jquartz.rich.validation.core.api.dsl.RuleBuilder.ensureThat;
 import static com.jquartz.rich.validation.core.evaluation.TruthValue.FALSE;
 import static com.jquartz.rich.validation.core.evaluation.TruthValue.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -104,28 +104,28 @@ public class ComparisonOperatorsIntegrationTest {
         return new BigIntegerFieldSubject(new BigInteger(number.toString()).add(BigInteger.ONE));
     }
 
-    private static ValidationLogic<BigIntegerFieldSubject> createRule(Number value) {
+    private static Rule<BigIntegerFieldSubject> createRule(Number value) {
         return ensureThat(BigIntegerFieldSubject.class).field(BigIntegerFieldSubject.FIELD).isGreaterThan(value).build();
     }
 
     @Test
     @UseDataProvider("fieldToLiteralScenarios")
-    public void testLiteralComparisonOperations(ValidationLogic<SingleFieldSubject> logic, int fieldValue, TruthValue expectedResult) throws Exception {
-        assertThat(logic.verify(new SingleFieldSubject(fieldValue))).isEqualTo(expectedResult);
+    public void testLiteralComparisonOperations(Rule<SingleFieldSubject> rule, int fieldValue, TruthValue expectedResult) throws Exception {
+        assertThat(rule.validate(new SingleFieldSubject(fieldValue))).isEqualTo(expectedResult);
     }
 
     @Test
     @UseDataProvider("fieldToFieldScenarios")
-    public void testLiteralComparisonOperations(ValidationLogic<TwoFieldsSubject> logic, int firstField, int secondField, TruthValue expectedResult) throws Exception {
-        assertThat(logic.verify(new TwoFieldsSubject(firstField, secondField))).isEqualTo(expectedResult);
+    public void testLiteralComparisonOperations(Rule<TwoFieldsSubject> rule, int firstField, int secondField, TruthValue expectedResult) throws Exception {
+        assertThat(rule.validate(new TwoFieldsSubject(firstField, secondField))).isEqualTo(expectedResult);
     }
 
     @Test
     @UseDataProvider("bigIntegerWithBorderValuesComparison")
     public void testBigIntegerWithBorderValuesComparison(Number number) throws Exception {
-        ValidationLogic<BigIntegerFieldSubject> rule = createRule(number);
+        Rule<BigIntegerFieldSubject> rule = createRule(number);
         BigIntegerFieldSubject subject = createSubject(number);
 
-        assertThat(rule.verify(subject)).isEqualTo(TruthValue.TRUE);
+        assertThat(rule.validate(subject)).isEqualTo(TruthValue.TRUE);
     }
 }

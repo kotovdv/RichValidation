@@ -1,14 +1,14 @@
 package com.jquartz.rich.validation.core.api.dsl;
 
-import com.jquartz.rich.validation.core.ValidationLogic;
+import com.jquartz.rich.validation.core.Rule;
 
 public class MustPartBuilder<T> {
 
     private final TargetPartBuilder<T> targetPart;
-    private final ValidationLogicBuilder<T> logicBuilder;
+    private final RuleLogicBuilder<T> logicBuilder;
 
     MustPartBuilder(TargetPartBuilder<T> targetPart,
-                    ValidationLogicBuilder<T> logicBuilder) {
+                    RuleLogicBuilder<T> logicBuilder) {
         this.targetPart = targetPart;
         this.logicBuilder = logicBuilder;
     }
@@ -23,7 +23,7 @@ public class MustPartBuilder<T> {
         return targetPart;
     }
 
-    public ValidationLogic<T> build() {
+    public Rule<T> build() {
         return logicBuilder.build();
     }
 }

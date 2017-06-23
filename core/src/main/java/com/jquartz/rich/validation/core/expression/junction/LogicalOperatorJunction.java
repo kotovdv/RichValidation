@@ -11,15 +11,15 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 
-public class LogicalOperatorJunction<T> implements Expression<T> {
+public abstract class LogicalOperatorJunction<T> implements Expression<T> {
 
     private final TruthValueBinaryOperator binaryOperator;
     private final TruthValue defaultValue;
     private List<Expression<T>> junctions = new ArrayList<>();
 
-    public LogicalOperatorJunction(Collection<Expression<T>> expressionsJunctions,
-                                   TruthValueBinaryOperator binaryOperator,
-                                   TruthValue defaultValue) {
+    LogicalOperatorJunction(Collection<Expression<T>> expressionsJunctions,
+                            TruthValueBinaryOperator binaryOperator,
+                            TruthValue defaultValue) {
         this.junctions.addAll(expressionsJunctions != null ? expressionsJunctions : emptyList());
         this.binaryOperator = binaryOperator;
         this.defaultValue = defaultValue;

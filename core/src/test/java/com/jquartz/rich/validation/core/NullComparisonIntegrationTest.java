@@ -8,7 +8,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.jquartz.rich.validation.core.api.dsl.RichValidationBuilder.ensureThat;
+import static com.jquartz.rich.validation.core.api.dsl.RuleBuilder.ensureThat;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(DataProviderRunner.class)
@@ -27,12 +27,12 @@ public class NullComparisonIntegrationTest {
 
     @DataProvider
     public static Object[][] nullAssertionScenarios() {
-        ValidationLogic<NullableFieldSubject> isNullRule = ensureThat(NullableFieldSubject.class)
+        Rule<NullableFieldSubject> isNullRule = ensureThat(NullableFieldSubject.class)
                 .field(FIELD)
                 .isNull()
                 .build();
 
-        ValidationLogic<NullableFieldSubject> isNotNullRule = ensureThat(NullableFieldSubject.class)
+        Rule<NullableFieldSubject> isNotNullRule = ensureThat(NullableFieldSubject.class)
                 .field(FIELD)
                 .isNotNull()
                 .build();
@@ -48,7 +48,7 @@ public class NullComparisonIntegrationTest {
     @Test
     @UseDataProvider("nullScenarios")
     public void testLiteralComparisonOperations(Integer fieldValue, Integer ruleValue, TruthValue expectedResult) throws Exception {
-        ValidationLogic<NullableFieldSubject> validationLogic = ensureThat(NullableFieldSubject.class)
+        Rule<NullableFieldSubject> rule = ensureThat(NullableFieldSubject.class)
                 .field(FIELD)
                 .isGreaterThan(ruleValue)
                 .build();
@@ -56,12 +56,12 @@ public class NullComparisonIntegrationTest {
 
         NullableFieldSubject subject = new NullableFieldSubject(fieldValue);
 
-        assertThat(validationLogic.verify(subject)).isEqualTo(expectedResult);
+        assertThat(rule.validate(subject)).isEqualTo(expectedResult);
     }
 
     @Test
     @UseDataProvider("nullAssertionScenarios")
-    public void testNullabilityAssertion(ValidationLogic<NullableFieldSubject> rule, NullableFieldSubject subject, TruthValue expectedValue) {
-        assertThat(rule.verify(subject)).isEqualTo(expectedValue);
+    public void testNullabilityAssertion(Rule<NullableFieldSubject> rule, NullableFieldSubject subject, TruthValue expectedValue) {
+        assertThat(rule.validate(subject)).isEqualTo(expectedValue);
     }
 }

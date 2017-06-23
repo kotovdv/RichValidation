@@ -14,11 +14,11 @@ public class TargetPartBuilder<T> {
 
     private final Class<T> targetClass;
     private final FieldPointer<?, T> targetFieldPointer;
-    private final ValidationLogicBuilder<T> holder;
+    private final RuleLogicBuilder<T> holder;
     private final FieldPointerFactory pointerFactory = new FieldPointerFactory();
     private final ComparisonExpressionFactory expressionFactory = new ComparisonExpressionFactory();
 
-    TargetPartBuilder(Class<T> targetClass, String fieldName, ValidationLogicBuilder<T> holder) {
+    TargetPartBuilder(Class<T> targetClass, String fieldName, RuleLogicBuilder<T> holder) {
         this.targetClass = targetClass;
         this.holder = holder;
         this.targetFieldPointer = pointerFactory.createPointer(targetClass, fieldName);
@@ -73,15 +73,11 @@ public class TargetPartBuilder<T> {
     }
 
     public MustPartBuilder<T> isNull() {
-        addExpression(new IsNullExpression<>(new FieldValue<>(targetFieldPointer)));
-
-        return new MustPartBuilder<>(this, holder);
+        return addExpression(new IsNullExpression<>(new FieldValue<>(targetFieldPointer)));
     }
 
     public MustPartBuilder<T> isNotNull() {
-        addExpression(new IsNotNullExpression<>(new FieldValue<>(targetFieldPointer)));
-
-        return new MustPartBuilder<>(this, holder);
+        return addExpression(new IsNotNullExpression<>(new FieldValue<>(targetFieldPointer)));
     }
 
     private MustPartBuilder<T> is(ComparisonOperator operator, LiteralPointer<?> pointer) {
