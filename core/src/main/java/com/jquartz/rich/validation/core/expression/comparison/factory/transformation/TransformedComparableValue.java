@@ -1,18 +1,17 @@
 package com.jquartz.rich.validation.core.expression.comparison.factory.transformation;
 
-import com.jquartz.rich.validation.core.expression.comparison.value.ComparableValue;
+import com.jquartz.rich.validation.core.expression.value.Value;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author Dmitriy Kotov
  */
-public class TransformedComparableValue<T, S> implements ComparableValue<T, S> {
-
-    private final ComparableValue<?, S> initialValue;
+public class TransformedComparableValue<T extends Comparable<T>, S> implements Value<T, S> {
+    private final Value<?, S> initialValue;
     private final Transformation<T> transformationSequence;
 
-    public TransformedComparableValue(ComparableValue<?, S> initialValue, Transformation<T> transformationSequence) {
+    public TransformedComparableValue(Value<?, S> initialValue, Transformation<T> transformationSequence) {
         this.initialValue = initialValue;
         this.transformationSequence = transformationSequence;
     }

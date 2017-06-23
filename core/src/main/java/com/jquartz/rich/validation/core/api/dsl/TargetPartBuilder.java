@@ -1,8 +1,11 @@
 package com.jquartz.rich.validation.core.api.dsl;
 
 import com.jquartz.rich.validation.core.expression.Expression;
+import com.jquartz.rich.validation.core.expression.common.IsNotNullExpression;
+import com.jquartz.rich.validation.core.expression.common.IsNullExpression;
 import com.jquartz.rich.validation.core.expression.comparison.factory.ComparisonExpressionFactory;
 import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
+import com.jquartz.rich.validation.core.expression.value.FieldValue;
 import com.jquartz.rich.validation.core.pointer.FieldPointer;
 import com.jquartz.rich.validation.core.pointer.FieldPointerFactory;
 import com.jquartz.rich.validation.core.pointer.LiteralPointer;
@@ -67,6 +70,18 @@ public class TargetPartBuilder<T> {
 
     public <V> MustPartBuilder<T> isNotEqualTo(V value) {
         return is(ComparisonOperator.NOT_EQUAL_TO, new LiteralPointer<>(value));
+    }
+
+    public MustPartBuilder<T> isNull() {
+        addExpression(new IsNullExpression<>(new FieldValue<>(targetFieldPointer)));
+
+        return new MustPartBuilder<>(this, holder);
+    }
+
+    public MustPartBuilder<T> isNotNull() {
+        addExpression(new IsNotNullExpression<>(new FieldValue<>(targetFieldPointer)));
+
+        return new MustPartBuilder<>(this, holder);
     }
 
     private MustPartBuilder<T> is(ComparisonOperator operator, LiteralPointer<?> pointer) {

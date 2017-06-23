@@ -7,8 +7,8 @@ import com.jquartz.rich.validation.core.expression.comparison.factory.transforma
 import com.jquartz.rich.validation.core.expression.comparison.factory.transformation.TransformationLogic;
 import com.jquartz.rich.validation.core.expression.comparison.factory.transformation.TransformedComparableValue;
 import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
-import com.jquartz.rich.validation.core.expression.comparison.value.FieldValue;
-import com.jquartz.rich.validation.core.expression.comparison.value.LiteralValue;
+import com.jquartz.rich.validation.core.expression.value.FieldValue;
+import com.jquartz.rich.validation.core.expression.value.LiteralValue;
 import com.jquartz.rich.validation.core.pointer.FieldPointer;
 import com.jquartz.rich.validation.core.pointer.LiteralPointer;
 import com.jquartz.rich.validation.core.util.PrimitiveToWrapperConverter;
