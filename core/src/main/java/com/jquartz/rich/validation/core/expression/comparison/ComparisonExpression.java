@@ -3,7 +3,7 @@ package com.jquartz.rich.validation.core.expression.comparison;
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
-import com.jquartz.rich.validation.core.expression.comparison.value.ComparableValue;
+import com.jquartz.rich.validation.core.expression.value.Value;
 
 import javax.annotation.Nonnull;
 
@@ -12,13 +12,13 @@ import javax.annotation.Nonnull;
  */
 public class ComparisonExpression<T extends Comparable<T>, S> implements Expression<S> {
 
-    private final ComparableValue<T, S> left;
+    private final Value<T, S> left;
     private final ComparisonOperator operator;
-    private final ComparableValue<T, S> right;
+    private final Value<T, S> right;
 
-    public ComparisonExpression(ComparableValue<T, S> left,
+    public ComparisonExpression(Value<T, S> left,
                                 ComparisonOperator operator,
-                                ComparableValue<T, S> right) {
+                                Value<T, S> right) {
         this.left = left;
         this.operator = operator;
         this.right = right;

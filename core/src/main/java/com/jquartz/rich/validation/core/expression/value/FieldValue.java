@@ -1,4 +1,4 @@
-package com.jquartz.rich.validation.core.expression.comparison.value;
+package com.jquartz.rich.validation.core.expression.value;
 
 import com.jquartz.rich.validation.core.pointer.FieldPointer;
 
@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Dmitriy Kotov
  */
-public class FieldValue<T, S> implements ComparableValue<T, S> {
+public class FieldValue<T, S> implements Value<T, S> {
 
     private final FieldPointer<T, S> pointer;
 
