@@ -1,13 +1,10 @@
 package com.jquartz.rich.validation.core.subject;
 
-/**
- * @author Dmitriy Kotov
- */
-public class SingleFieldSubject {
+public class FloatingPointSubject {
 
-    private final long field;
+    private final double field;
 
-    public SingleFieldSubject(long field) {
+    public FloatingPointSubject(double field) {
         this.field = field;
     }
 

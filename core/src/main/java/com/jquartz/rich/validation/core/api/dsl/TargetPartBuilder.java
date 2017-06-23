@@ -1,7 +1,7 @@
 package com.jquartz.rich.validation.core.api.dsl;
 
 import com.jquartz.rich.validation.core.expression.Expression;
-import com.jquartz.rich.validation.core.expression.comparison.factory.ComparisonExpressionLogicFactory;
+import com.jquartz.rich.validation.core.expression.comparison.factory.ComparisonExpressionFactory;
 import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
 import com.jquartz.rich.validation.core.pointer.FieldPointer;
 import com.jquartz.rich.validation.core.pointer.FieldPointerFactory;
@@ -13,7 +13,7 @@ public class TargetPartBuilder<T> {
     private final FieldPointer<?, T> targetFieldPointer;
     private final ValidationLogicBuilder<T> holder;
     private final FieldPointerFactory pointerFactory = new FieldPointerFactory();
-    private final ComparisonExpressionLogicFactory logicFactory = new ComparisonExpressionLogicFactory();
+    private final ComparisonExpressionFactory expressionFactory = new ComparisonExpressionFactory();
 
     TargetPartBuilder(Class<T> targetClass, String fieldName, ValidationLogicBuilder<T> holder) {
         this.targetClass = targetClass;
@@ -70,11 +70,11 @@ public class TargetPartBuilder<T> {
     }
 
     private MustPartBuilder<T> is(ComparisonOperator operator, LiteralPointer<?> pointer) {
-        return addExpression(logicFactory.create(targetFieldPointer, operator, pointer));
+        return addExpression(expressionFactory.create(targetFieldPointer, operator, pointer));
     }
 
     private MustPartBuilder<T> is(ComparisonOperator operator, FieldPointer<?, T> pointer) {
-        return addExpression(logicFactory.create(targetFieldPointer, operator, pointer));
+        return addExpression(expressionFactory.create(targetFieldPointer, operator, pointer));
     }
 
     private MustPartBuilder<T> addExpression(Expression<T> expression) {
