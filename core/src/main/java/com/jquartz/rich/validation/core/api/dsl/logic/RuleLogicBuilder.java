@@ -45,11 +45,18 @@ public class RuleLogicBuilder<T> {
     }
 
     public void persistCurrentChanges() {
+        if (currentTargetJunction.isEmpty()) {
+            return;
+        }
+
         Expression<T> condition = currentConditionJunction.isEmpty()
                 ? new OptionalExpression<>()
                 : currentConditionJunction.build();
 
         Expression<T> mustBe = currentTargetJunction.build();
+
+        currentConditionJunction.clear();
+        currentTargetJunction.clear();
 
         ruleLogic.add(new ConditionalExpression<>(condition, mustBe));
     }

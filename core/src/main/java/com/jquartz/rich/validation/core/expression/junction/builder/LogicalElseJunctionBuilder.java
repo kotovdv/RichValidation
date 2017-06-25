@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Dmitriy Kotov
  */
-public class LogicalElseJunctionBuilder<T> implements Buildable<T> {
+public class LogicalElseJunctionBuilder<T> implements BuildableExpression<T> {
     private final List<ConditionalExpression<T>> expressions = new ArrayList<>();
     private Expression<T> otherwise = new OptionalExpression<>();
 
@@ -26,6 +26,12 @@ public class LogicalElseJunctionBuilder<T> implements Buildable<T> {
     @Override
     public Expression<T> build() {
         return new LogicalElseJunction<>(expressions, otherwise);
+    }
+
+    @Override
+    public void clear() {
+        this.expressions.clear();
+        this.otherwise = null;
     }
 
     @Override

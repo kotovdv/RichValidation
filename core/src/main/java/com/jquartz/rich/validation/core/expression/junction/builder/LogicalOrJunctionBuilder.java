@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 import static java.util.stream.Collectors.toList;
 
-public class LogicalOrJunctionBuilder<T> implements Buildable<T> {
+public class LogicalOrJunctionBuilder<T> implements BuildableExpression<T> {
     private final Deque<LogicalAndJunctionBuilder<T>> partsJoinedByOr = new LinkedList<>();
 
     public void addExpression(Expression<T> expression) {
@@ -30,6 +30,12 @@ public class LogicalOrJunctionBuilder<T> implements Buildable<T> {
                 .map(LogicalAndJunctionBuilder::build)
                 .collect(toList())
         );
+    }
+
+    @Override
+    public void clear() {
+        this.partsJoinedByOr.forEach(LogicalAndJunctionBuilder::clear);
+        this.partsJoinedByOr.clear();
     }
 
     @Override

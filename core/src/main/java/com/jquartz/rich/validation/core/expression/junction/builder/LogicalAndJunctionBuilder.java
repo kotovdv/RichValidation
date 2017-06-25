@@ -6,11 +6,11 @@ import com.jquartz.rich.validation.core.expression.junction.LogicalAndJunction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogicalAndJunctionBuilder<T> implements Buildable<T> {
+public class LogicalAndJunctionBuilder<T> implements BuildableExpression<T> {
 
     private List<Expression<T>> expressions = new ArrayList<>();
 
-    public void addExpression(Expression<T> mustPartBuilder) {
+    void addExpression(Expression<T> mustPartBuilder) {
         this.expressions.add(mustPartBuilder);
     }
 
@@ -21,6 +21,11 @@ public class LogicalAndJunctionBuilder<T> implements Buildable<T> {
         }
 
         return new LogicalAndJunction<>(new ArrayList<>(expressions));
+    }
+
+    @Override
+    public void clear() {
+        this.expressions.clear();
     }
 
     @Override

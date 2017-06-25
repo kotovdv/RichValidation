@@ -33,8 +33,8 @@ public class ConditionalExpressionIntegrationTest {
                 {new PersonSubject(19, FEMALE), TruthValue.FALSE},
                 {new PersonSubject(19, MALE), TruthValue.TRUE},
                 {new PersonSubject(15, MALE), TruthValue.TRUE},
-                {new PersonSubject(19, null), TruthValue.UNKNOWN},
-                {new PersonSubject(21, null), TruthValue.UNKNOWN},
+                {new PersonSubject(19, null), TruthValue.TRUE},
+                {new PersonSubject(21, null), TruthValue.TRUE},
         };
     }
 
@@ -45,8 +45,8 @@ public class ConditionalExpressionIntegrationTest {
                 {new PersonSubject(19, FEMALE), TruthValue.FALSE},
                 {new PersonSubject(19, MALE), TruthValue.TRUE},
                 {new PersonSubject(15, MALE), TruthValue.FALSE},
-                {new PersonSubject(19, null), TruthValue.UNKNOWN},
-                {new PersonSubject(21, null), TruthValue.UNKNOWN},
+                {new PersonSubject(19, null), TruthValue.TRUE},
+                {new PersonSubject(21, null), TruthValue.TRUE},
         };
     }
 
@@ -153,6 +153,4 @@ public class ConditionalExpressionIntegrationTest {
 
         assertThat(rule.validate(subject)).isEqualTo(expectedResult);
     }
-
-
 }
