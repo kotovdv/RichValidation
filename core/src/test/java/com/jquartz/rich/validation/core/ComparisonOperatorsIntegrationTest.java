@@ -39,12 +39,12 @@ public class ComparisonOperatorsIntegrationTest {
                 {ensureThat(SingleFieldSubject.class).field(FIELD).isLessOrEqualTo(BigInteger.valueOf(10)).build(), 15, FALSE},
                 {ensureThat(SingleFieldSubject.class).field(FIELD).isLessOrEqualTo(BigInteger.valueOf(10)).build(), 10, TRUE},
                 {ensureThat(SingleFieldSubject.class).field(FIELD).isLessOrEqualTo(BigInteger.valueOf(10)).build(), 5, TRUE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isEqualTo(BigInteger.valueOf(10)).build(), 5, FALSE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isEqualTo(BigInteger.valueOf(10)).build(), 10, TRUE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isEqualTo(BigInteger.valueOf(10)).build(), 15, FALSE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotEqualTo(BigInteger.valueOf(10)).build(), 5, TRUE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotEqualTo(BigInteger.valueOf(10)).build(), 10, FALSE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotEqualTo(BigInteger.valueOf(10)).build(), 15, TRUE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isCoequalTo(BigInteger.valueOf(10)).build(), 5, FALSE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isCoequalTo(BigInteger.valueOf(10)).build(), 10, TRUE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isCoequalTo(BigInteger.valueOf(10)).build(), 15, FALSE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotCoequalTo(BigInteger.valueOf(10)).build(), 5, TRUE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotCoequalTo(BigInteger.valueOf(10)).build(), 10, FALSE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotCoequalTo(BigInteger.valueOf(10)).build(), 15, TRUE},
                 {ensureThat(SingleFieldSubject.class).field(FIELD).isGreaterThan(10).build(), 5, FALSE},
                 {ensureThat(SingleFieldSubject.class).field(FIELD).isGreaterThan(10).build(), 10, FALSE},
                 {ensureThat(SingleFieldSubject.class).field(FIELD).isGreaterThan(10).build(), 15, TRUE},
@@ -57,12 +57,12 @@ public class ComparisonOperatorsIntegrationTest {
                 {ensureThat(SingleFieldSubject.class).field(FIELD).isLessOrEqualTo(10).build(), 15, FALSE},
                 {ensureThat(SingleFieldSubject.class).field(FIELD).isLessOrEqualTo(10).build(), 10, TRUE},
                 {ensureThat(SingleFieldSubject.class).field(FIELD).isLessOrEqualTo(10).build(), 5, TRUE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isEqualTo(10).build(), 5, FALSE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isEqualTo(10).build(), 10, TRUE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isEqualTo(10).build(), 15, FALSE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotEqualTo(10).build(), 5, TRUE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotEqualTo(10).build(), 10, FALSE},
-                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotEqualTo(10).build(), 15, TRUE}
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isCoequalTo(10).build(), 5, FALSE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isCoequalTo(10).build(), 10, TRUE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isCoequalTo(10).build(), 15, FALSE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotCoequalTo(10).build(), 5, TRUE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotCoequalTo(10).build(), 10, FALSE},
+                {ensureThat(SingleFieldSubject.class).field(FIELD).isNotCoequalTo(10).build(), 15, TRUE}
         };
     }
 
@@ -81,12 +81,12 @@ public class ComparisonOperatorsIntegrationTest {
                 {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isLessOrEqualToField(SECOND_FIELD).build(), 10, 15, TRUE},
                 {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isLessOrEqualToField(SECOND_FIELD).build(), 10, 10, TRUE},
                 {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isLessOrEqualToField(SECOND_FIELD).build(), 10, 5, FALSE},
-                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isEqualToField(SECOND_FIELD).build(), 10, 5, FALSE},
-                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isEqualToField(SECOND_FIELD).build(), 10, 10, TRUE},
-                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isEqualToField(SECOND_FIELD).build(), 10, 15, FALSE},
-                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isNotEqualToField(SECOND_FIELD).build(), 10, 5, TRUE},
-                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isNotEqualToField(SECOND_FIELD).build(), 10, 10, FALSE},
-                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isNotEqualToField(SECOND_FIELD).build(), 10, 15, TRUE}
+                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isCoequalToField(SECOND_FIELD).build(), 10, 5, FALSE},
+                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isCoequalToField(SECOND_FIELD).build(), 10, 10, TRUE},
+                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isCoequalToField(SECOND_FIELD).build(), 10, 15, FALSE},
+                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isNotCoequalToField(SECOND_FIELD).build(), 10, 5, TRUE},
+                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isNotCoequalToField(SECOND_FIELD).build(), 10, 10, FALSE},
+                {ensureThat(TwoFieldsSubject.class).field(FIRST_FIELD).isNotCoequalToField(SECOND_FIELD).build(), 10, 15, TRUE}
         };
     }
 

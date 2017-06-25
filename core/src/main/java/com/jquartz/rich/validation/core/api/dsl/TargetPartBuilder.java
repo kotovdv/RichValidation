@@ -1,11 +1,15 @@
 package com.jquartz.rich.validation.core.api.dsl;
 
 import com.jquartz.rich.validation.core.expression.Expression;
+import com.jquartz.rich.validation.core.expression.common.AreEqualExpression;
+import com.jquartz.rich.validation.core.expression.common.AreNotEqualExpression;
 import com.jquartz.rich.validation.core.expression.common.IsNotNullExpression;
 import com.jquartz.rich.validation.core.expression.common.IsNullExpression;
 import com.jquartz.rich.validation.core.expression.comparison.factory.ComparisonExpressionFactory;
 import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
 import com.jquartz.rich.validation.core.expression.value.FieldValue;
+import com.jquartz.rich.validation.core.expression.value.LiteralValue;
+import com.jquartz.rich.validation.core.expression.value.Value;
 import com.jquartz.rich.validation.core.pointer.FieldPointer;
 import com.jquartz.rich.validation.core.pointer.FieldPointerFactory;
 import com.jquartz.rich.validation.core.pointer.LiteralPointer;
@@ -40,14 +44,6 @@ public class TargetPartBuilder<T> {
         return is(ComparisonOperator.LESS_OR_EQUAL_TO, pointerFactory.createPointer(targetClass, fieldName));
     }
 
-    public MustPartBuilder<T> isEqualToField(String fieldName) {
-        return is(ComparisonOperator.EQUAL_TO, pointerFactory.createPointer(targetClass, fieldName));
-    }
-
-    public MustPartBuilder<T> isNotEqualToField(String fieldName) {
-        return is(ComparisonOperator.NOT_EQUAL_TO, pointerFactory.createPointer(targetClass, fieldName));
-    }
-
     public <V> MustPartBuilder<T> isGreaterThan(V value) {
         return is(ComparisonOperator.GREATER_THAN, new LiteralPointer<>(value));
     }
@@ -64,12 +60,36 @@ public class TargetPartBuilder<T> {
         return is(ComparisonOperator.LESS_OR_EQUAL_TO, new LiteralPointer<>(value));
     }
 
-    public <V> MustPartBuilder<T> isEqualTo(V value) {
+    public MustPartBuilder<T> isCoequalToField(String fieldName) {
+        return is(ComparisonOperator.EQUAL_TO, pointerFactory.createPointer(targetClass, fieldName));
+    }
+
+    public MustPartBuilder<T> isNotCoequalToField(String fieldName) {
+        return is(ComparisonOperator.NOT_EQUAL_TO, pointerFactory.createPointer(targetClass, fieldName));
+    }
+
+    public <V> MustPartBuilder<T> isCoequalTo(V value) {
         return is(ComparisonOperator.EQUAL_TO, new LiteralPointer<>(value));
     }
 
-    public <V> MustPartBuilder<T> isNotEqualTo(V value) {
+    public <V> MustPartBuilder<T> isNotCoequalTo(V value) {
         return is(ComparisonOperator.NOT_EQUAL_TO, new LiteralPointer<>(value));
+    }
+
+    public MustPartBuilder<T> isEqualToField(String fieldName) {
+        return addEqualsExpression(new FieldValue<>(targetFieldPointer), new FieldValue<>(pointerFactory.createPointer(targetClass, fieldName)));
+    }
+
+    public MustPartBuilder<T> isNotEqualToField(String fieldName) {
+        return addNotEqualsExpression(new FieldValue<>(targetFieldPointer), new FieldValue<>(pointerFactory.createPointer(targetClass, fieldName)));
+    }
+
+    public <V> MustPartBuilder<T> isEqualTo(V value) {
+        return addEqualsExpression(new FieldValue<>(targetFieldPointer), new LiteralValue<>(new LiteralPointer<>(value)));
+    }
+
+    public <V> MustPartBuilder<T> isNotEqualTo(V value) {
+        return addNotEqualsExpression(new FieldValue<>(targetFieldPointer), new LiteralValue<>(new LiteralPointer<>(value)));
     }
 
     public MustPartBuilder<T> isNull() {
@@ -78,6 +98,14 @@ public class TargetPartBuilder<T> {
 
     public MustPartBuilder<T> isNotNull() {
         return addExpression(new IsNotNullExpression<>(new FieldValue<>(targetFieldPointer)));
+    }
+
+    private MustPartBuilder<T> addEqualsExpression(Value<?, T> leftValue, Value<?, T> rightValue) {
+        return addExpression(new AreEqualExpression<>(leftValue, rightValue));
+    }
+
+    private MustPartBuilder<T> addNotEqualsExpression(Value<?, T> leftValue, Value<?, T> rightValue) {
+        return addExpression(new AreNotEqualExpression<>(leftValue, rightValue));
     }
 
     private MustPartBuilder<T> is(ComparisonOperator operator, LiteralPointer<?> pointer) {
