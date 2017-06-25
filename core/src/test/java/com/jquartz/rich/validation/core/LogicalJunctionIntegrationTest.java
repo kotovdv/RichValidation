@@ -22,9 +22,9 @@ public class LogicalJunctionIntegrationTest {
     public static Object[][] logicalJunctionScenarios() {
         Rule<SingleFieldSubject> isEqualToOneOfTwoNumbers = ensureThat(SingleFieldSubject.class)
                 .field(FIELD)
-                .isEqualTo(10)
+                .isCoequalTo(10)
                 .or()
-                .isEqualTo(20)
+                .isCoequalTo(20)
                 .build();
 
         Rule<SingleFieldSubject> isInRangeBetween = ensureThat(SingleFieldSubject.class)
