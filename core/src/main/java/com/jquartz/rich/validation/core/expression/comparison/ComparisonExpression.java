@@ -40,11 +40,12 @@ public class ComparisonExpression<T extends Comparable<T>, S> implements Express
     }
 
     @Override
+    public String getTextualRepresentation() {
+        return left.getTextualRepresentation() + " " + operator.getRepresentation() + " " + right.getTextualRepresentation();
+    }
+
+    @Override
     public String toString() {
-        return "ComparisonExpression{" +
-                "left=" + left +
-                ", operator=" + operator +
-                ", right=" + right +
-                '}';
+        return getTextualRepresentation();
     }
 }

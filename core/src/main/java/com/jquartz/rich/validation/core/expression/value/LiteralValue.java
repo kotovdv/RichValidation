@@ -19,4 +19,14 @@ public class LiteralValue<T, S> implements Value<T, S> {
     public T get(@Nonnull S source) {
         return value.resolve();
     }
+
+    @Override
+    public String getTextualRepresentation() {
+        return "\"" + value.getTextualRepresentation() + "\"";
+    }
+
+    @Override
+    public String toString() {
+        return getTextualRepresentation();
+    }
 }

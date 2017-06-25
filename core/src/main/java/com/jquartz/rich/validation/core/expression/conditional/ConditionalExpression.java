@@ -5,6 +5,9 @@ import com.jquartz.rich.validation.core.expression.Expression;
 
 import javax.annotation.Nonnull;
 
+import static com.jquartz.rich.validation.core.api.textual.Tokens.ENSURE_THAT;
+import static com.jquartz.rich.validation.core.api.textual.Tokens.WHEN;
+
 /**
  * @author Dmitriy Kotov
  */
@@ -24,5 +27,15 @@ public class ConditionalExpression<T> {
 
     public TruthValue apply(@Nonnull T subject) {
         return mustBe.apply(subject);
+    }
+
+    public String getTextualRepresentation() {
+        return ENSURE_THAT + " " + mustBe.getTextualRepresentation() + " "
+                + WHEN + " " + condition.getTextualRepresentation();
+    }
+
+    @Override
+    public String toString() {
+        return getTextualRepresentation();
     }
 }

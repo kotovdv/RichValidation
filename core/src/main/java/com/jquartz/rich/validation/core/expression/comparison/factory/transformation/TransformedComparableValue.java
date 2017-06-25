@@ -20,4 +20,9 @@ public class TransformedComparableValue<T extends Comparable<T>, S> implements V
     public T get(@Nonnull S source) {
         return transformationSequence.applyTransformation(initialValue.get(source));
     }
+
+    @Override
+    public String getTextualRepresentation() {
+        return initialValue.getTextualRepresentation();
+    }
 }

@@ -32,4 +32,13 @@ public class FieldPointer<T, S> {
     public Class<T> getTargetClass() {
         return targetClass;
     }
+
+    public String getTextualRepresentation() {
+        return sourceClass.getSimpleName() + "." + field.getName();
+    }
+
+    @Override
+    public String toString() {
+        return getTextualRepresentation();
+    }
 }

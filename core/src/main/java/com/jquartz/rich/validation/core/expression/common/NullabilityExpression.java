@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 
 public abstract class NullabilityExpression<T> implements Expression<T> {
 
-    private final Value<?, T> value;
+    protected final Value<?, T> value;
 
     NullabilityExpression(Value<?, T> value) {
         this.value = value;
@@ -22,4 +22,9 @@ public abstract class NullabilityExpression<T> implements Expression<T> {
     }
 
     protected abstract boolean applyNullabilityCheck(@Nullable Object value);
+
+    @Override
+    public String toString() {
+        return getTextualRepresentation();
+    }
 }
