@@ -11,8 +11,8 @@ import javax.annotation.Nullable;
  */
 public abstract class EqualityExpression<T> implements Expression<T> {
 
-    private final Value<?, T> left;
-    private final Value<?, T> right;
+    protected final Value<?, T> left;
+    protected final Value<?, T> right;
 
     EqualityExpression(Value<?, T> left, Value<?, T> right) {
         this.left = left;
@@ -30,4 +30,9 @@ public abstract class EqualityExpression<T> implements Expression<T> {
     }
 
     protected abstract boolean applyEqualityCheck(@Nullable Object left, @Nullable Object right);
+
+    @Override
+    public String toString() {
+        return getTextualRepresentation();
+    }
 }

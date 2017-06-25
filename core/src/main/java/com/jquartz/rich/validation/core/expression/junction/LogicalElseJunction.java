@@ -1,5 +1,7 @@
 package com.jquartz.rich.validation.core.expression.junction;
 
+import com.google.common.base.Joiner;
+import com.jquartz.rich.validation.core.api.textual.Tokens;
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.common.OptionalExpression;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.jquartz.rich.validation.core.api.textual.Tokens.OTHERWISE;
 import static com.jquartz.rich.validation.core.evaluation.TruthValue.*;
 import static java.util.Collections.emptyList;
 
@@ -45,5 +48,15 @@ public class LogicalElseJunction<T> implements Expression<T> {
         return hadApplicableExpression == FALSE
                 ? otherwise.apply(subject)
                 : UNKNOWN;
+    }
+
+    @Override
+    public String getTextualRepresentation() {
+        return Joiner.on(Tokens.ELSE.toString()).join(expressions) + " " + OTHERWISE + " " + otherwise.getTextualRepresentation();
+    }
+
+    @Override
+    public String toString() {
+        return getTextualRepresentation();
     }
 }

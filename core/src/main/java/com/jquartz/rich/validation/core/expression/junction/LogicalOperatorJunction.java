@@ -15,7 +15,7 @@ public abstract class LogicalOperatorJunction<T> implements Expression<T> {
 
     private final TruthValueBinaryOperator binaryOperator;
     private final TruthValue defaultValue;
-    private List<Expression<T>> junctions = new ArrayList<>();
+    protected List<Expression<T>> junctions = new ArrayList<>();
 
     LogicalOperatorJunction(Collection<Expression<T>> expressionsJunctions,
                             TruthValueBinaryOperator binaryOperator,

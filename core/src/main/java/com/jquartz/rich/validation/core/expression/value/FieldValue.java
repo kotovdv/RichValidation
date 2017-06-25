@@ -19,4 +19,14 @@ public class FieldValue<T, S> implements Value<T, S> {
     public T get(@Nonnull S source) {
         return pointer.resolve(source);
     }
+
+    @Override
+    public String getTextualRepresentation() {
+        return pointer.getTextualRepresentation();
+    }
+
+    @Override
+    public String toString() {
+        return getTextualRepresentation();
+    }
 }

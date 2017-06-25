@@ -17,4 +17,13 @@ public class Rule<T> {
     public TruthValue validate(T instance) {
         return expression.apply(instance);
     }
+
+    public String getTextualRepresentation() {
+        return expression.getTextualRepresentation();
+    }
+
+    @Override
+    public String toString() {
+        return getTextualRepresentation();
+    }
 }
