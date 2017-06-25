@@ -6,7 +6,7 @@ import com.jquartz.rich.validation.core.expression.junction.LogicalAndJunction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogicalAndJunctionBuilder<T> {
+public class LogicalAndJunctionBuilder<T> implements Buildable<T> {
 
     private List<Expression<T>> expressions = new ArrayList<>();
 
@@ -14,11 +14,17 @@ public class LogicalAndJunctionBuilder<T> {
         this.expressions.add(mustPartBuilder);
     }
 
+    @Override
     public Expression<T> build() {
         if (expressions.isEmpty()) {
             throw new UnableToConstructEmptyJunctionException();
         }
 
         return new LogicalAndJunction<>(new ArrayList<>(expressions));
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return expressions.isEmpty();
     }
 }

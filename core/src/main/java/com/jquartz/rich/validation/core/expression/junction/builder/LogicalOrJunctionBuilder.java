@@ -8,21 +8,19 @@ import java.util.LinkedList;
 
 import static java.util.stream.Collectors.toList;
 
-public class LogicalOrJunctionBuilder<T> {
+public class LogicalOrJunctionBuilder<T> implements Buildable<T> {
     private final Deque<LogicalAndJunctionBuilder<T>> partsJoinedByOr = new LinkedList<>();
 
-    public LogicalOrJunctionBuilder() {
-        this.partsJoinedByOr.push(new LogicalAndJunctionBuilder<>());
-    }
-
-    public LogicalAndJunctionBuilder<T> getLatestPart() {
-        return partsJoinedByOr.peek();
+    public void addExpression(Expression<T> expression) {
+        LogicalAndJunctionBuilder<T> latestPart = getLatestPart();
+        latestPart.addExpression(expression);
     }
 
     public void startNewOrJunction() {
         partsJoinedByOr.push(new LogicalAndJunctionBuilder<>());
     }
 
+    @Override
     public Expression<T> build() {
         if (partsJoinedByOr.isEmpty()) {
             throw new UnableToConstructEmptyJunctionException();
@@ -33,4 +31,19 @@ public class LogicalOrJunctionBuilder<T> {
                 .collect(toList())
         );
     }
+
+    @Override
+    public boolean isEmpty() {
+        return partsJoinedByOr.isEmpty();
+    }
+
+
+    private LogicalAndJunctionBuilder<T> getLatestPart() {
+        if (partsJoinedByOr.isEmpty()) {
+            this.partsJoinedByOr.push(new LogicalAndJunctionBuilder<>());
+        }
+
+        return partsJoinedByOr.peek();
+    }
+
 }
