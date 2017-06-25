@@ -21,8 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ComparisonOperatorsIntegrationTest {
 
     private static final String FIELD = SingleFieldSubject.getFieldName();
-    private static final String FIRST_FIELD = TwoFieldsSubject.getFirstFieldName();
-    private static final String SECOND_FIELD = TwoFieldsSubject.getSecondFieldName();
+    private static final String FIRST_FIELD = TwoFieldsSubject.FIRST_FIELD;
+    private static final String SECOND_FIELD = TwoFieldsSubject.SECOND_FIELD;
 
     @DataProvider
     public static Object[][] fieldToLiteralScenarios() {

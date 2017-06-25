@@ -11,11 +11,11 @@ import javax.annotation.Nonnull;
 public class ConditionalExpression<T> {
 
     private final Expression<T> condition;
-    private final Expression<T> appliedExpression;
+    private final Expression<T> mustBe;
 
-    public ConditionalExpression(Expression<T> condition, Expression<T> appliedExpression) {
+    public ConditionalExpression(Expression<T> condition, Expression<T> mustBe) {
         this.condition = condition;
-        this.appliedExpression = appliedExpression;
+        this.mustBe = mustBe;
     }
 
     public TruthValue isApplicable(@Nonnull T subject) {
@@ -23,6 +23,6 @@ public class ConditionalExpression<T> {
     }
 
     public TruthValue apply(@Nonnull T subject) {
-        return appliedExpression.apply(subject);
+        return mustBe.apply(subject);
     }
 }
