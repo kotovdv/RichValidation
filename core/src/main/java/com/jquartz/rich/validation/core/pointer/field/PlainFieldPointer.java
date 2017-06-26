@@ -1,28 +1,33 @@
-package com.jquartz.rich.validation.core.pointer;
+package com.jquartz.rich.validation.core.pointer.field;
 
 import com.jquartz.rich.validation.core.pointer.exception.FailedToExtractFieldValueException;
 
 import java.lang.reflect.Field;
 
-public class FieldPointer<T, S> {
+public class PlainFieldPointer<T, S> implements FieldPointer<T, S> {
 
     private final Class<S> sourceClass;
     private final Class<T> targetClass;
     private final Field field;
 
-    public FieldPointer(Class<S> sourceClass, Class<T> targetClass, Field field) {
+    public PlainFieldPointer(Class<S> sourceClass, Class<T> targetClass, Field field) {
         this.sourceClass = sourceClass;
         this.targetClass = targetClass;
         this.field = field;
     }
 
     @SuppressWarnings("unchecked")
-    public T resolve(S sourceInstance) {
+    public T resolve(S source) {
         try {
-            return (T) field.get(sourceInstance);
+            return (T) field.get(source);
         } catch (IllegalAccessException e) {
             throw new FailedToExtractFieldValueException(sourceClass, field.getName(), e);
         }
+    }
+
+    @Override
+    public Class<T> getPointedClass() {
+        return targetClass;
     }
 
     public Class<S> getSourceClass() {

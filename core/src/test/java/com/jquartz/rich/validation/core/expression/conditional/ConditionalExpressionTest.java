@@ -1,16 +1,19 @@
 package com.jquartz.rich.validation.core.expression.conditional;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.expression.comparison.ComparisonExpression;
-import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
-import com.jquartz.rich.validation.core.expression.value.LiteralValue;
-import com.jquartz.rich.validation.core.pointer.LiteralPointer;
+import com.jquartz.rich.validation.core.expression.ConditionalExpression;
+import com.jquartz.rich.validation.core.expression.Expression;
+import com.jquartz.rich.validation.core.expression.base.binary.LiteralToLiteralBinaryExpression;
+import com.jquartz.rich.validation.core.expression.base.binary.action.comparison.ComparisonAction;
+import com.jquartz.rich.validation.core.pointer.literal.LiteralPointer;
+import com.jquartz.rich.validation.core.pointer.literal.PlainLiteralPointer;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator.GREATER_THAN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -21,13 +24,14 @@ public class ConditionalExpressionTest {
 
     @DataProvider
     public static Object[][] conditionExpressionDP() {
-        LiteralValue<Integer, Object> ten = new LiteralValue<>(new LiteralPointer<>(10));
-        LiteralValue<Integer, Object> five = new LiteralValue<>(new LiteralPointer<>(5));
-        LiteralValue<Integer, Object> nullValue = new LiteralValue<>(new LiteralPointer<>(null));
+        Class<Integer> comparableType = Integer.class;
+        LiteralPointer<Integer> ten = new PlainLiteralPointer<>(10, comparableType);
+        LiteralPointer<Integer> five = new PlainLiteralPointer<>(5, comparableType);
+        LiteralPointer<Integer> nullValue = new PlainLiteralPointer<>(null, null);
 
-        ComparisonExpression<Integer, Object> validExpression = new ComparisonExpression<>(ten, ComparisonOperator.GREATER_THAN, five);
-        ComparisonExpression<Integer, Object> invalidExpression = new ComparisonExpression<>(five, ComparisonOperator.GREATER_THAN, ten);
-        ComparisonExpression<Integer, Object> unknownExpression = new ComparisonExpression<>(five, ComparisonOperator.GREATER_THAN, nullValue);
+        Expression<Object> validExpression = new LiteralToLiteralBinaryExpression(ten, new ComparisonAction<>(GREATER_THAN, comparableType), five);
+        Expression<Object> invalidExpression = new LiteralToLiteralBinaryExpression(five, new ComparisonAction<>(GREATER_THAN, comparableType), ten);
+        Expression<Object> unknownExpression = new LiteralToLiteralBinaryExpression(five, new ComparisonAction<>(GREATER_THAN, comparableType), nullValue);
 
         return new Object[][]{
                 {validExpression, invalidExpression, TruthValue.TRUE, TruthValue.FALSE},
@@ -41,8 +45,8 @@ public class ConditionalExpressionTest {
 
     @Test
     @UseDataProvider("conditionExpressionDP")
-    public void testConditionalExpression(ComparisonExpression<Integer, Object> condition,
-                                          ComparisonExpression<Integer, Object> target,
+    public void testConditionalExpression(Expression<Object> condition,
+                                          Expression<Object> target,
                                           TruthValue expectedConditionResult,
                                           TruthValue expectedTargetResult) throws Exception {
         Object mockSubject = new Object();

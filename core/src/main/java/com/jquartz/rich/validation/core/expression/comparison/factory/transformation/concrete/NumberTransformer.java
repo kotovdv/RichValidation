@@ -16,8 +16,8 @@ public class NumberTransformer {
 
         return new TransformationLogic<>(
                 new Transformation<>(resultingClass, transformation),
-                new Transformation<>(resultingClass, transformation)
-        );
+                new Transformation<>(resultingClass, transformation),
+                resultingClass);
     }
 
     private static <R extends Number> R applyTransformation(Function<Number, R> transformer, Object value) {

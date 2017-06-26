@@ -1,8 +1,8 @@
 package com.jquartz.rich.validation.core.expression.junction.builder;
 
+import com.jquartz.rich.validation.core.expression.ConditionalExpression;
 import com.jquartz.rich.validation.core.expression.Expression;
-import com.jquartz.rich.validation.core.expression.common.OptionalExpression;
-import com.jquartz.rich.validation.core.expression.conditional.ConditionalExpression;
+import com.jquartz.rich.validation.core.expression.OptionalExpression;
 import com.jquartz.rich.validation.core.expression.junction.LogicalElseJunction;
 
 import java.util.ArrayList;
