@@ -29,9 +29,9 @@ public class LogicalJunctionIntegrationTest {
 
         Rule<SingleFieldSubject> isInRangeBetween = ensureThat(SingleFieldSubject.class)
                 .field(FIELD)
-                .isGreaterOrEqualTo(10)
+                .isGreaterOrCoequalTo(10)
                 .and()
-                .isLessOrEqualTo(20)
+                .isLessOrCoequalTo(20)
                 .build();
 
         Rule<SingleFieldSubject> isInImpossibleRange = ensureThat(SingleFieldSubject.class)
@@ -43,9 +43,9 @@ public class LogicalJunctionIntegrationTest {
 
         Rule<SingleFieldSubject> isInNowPossibleRange = ensureThat(SingleFieldSubject.class)
                 .field(FIELD)
-                .isGreaterOrEqualTo(20)
+                .isGreaterOrCoequalTo(20)
                 .or()
-                .isLessOrEqualTo(10)
+                .isLessOrCoequalTo(10)
                 .build();
 
         return new Object[][]{

@@ -91,7 +91,7 @@ public class ConditionalExpressionIntegrationTest {
     public void testFirstPersonRuleValidation(PersonSubject subject, TruthValue expectedResult) throws Exception {
         Rule<PersonSubject> rule = ensureThat(PersonSubject.class)
                 .field(AGE)
-                .isGreaterOrEqualTo(20)
+                .isGreaterOrCoequalTo(20)
                 .when()
                 .field(SEX).isEqualTo(FEMALE)
                 .build();
@@ -109,10 +109,10 @@ public class ConditionalExpressionIntegrationTest {
     public void testSecondPersonRuleValidation(PersonSubject subject, TruthValue expectedResult) throws Exception {
         Rule<PersonSubject> rule = ensureThat(PersonSubject.class)
                 .field(AGE)
-                .isGreaterOrEqualTo(20)
+                .isGreaterOrCoequalTo(20)
                 .when().field(SEX).isEqualTo(FEMALE)
                 .otherwise()
-                .isGreaterOrEqualTo(16)
+                .isGreaterOrCoequalTo(16)
                 .build();
 
         assertThat(rule.validate(subject)).isEqualTo(expectedResult);

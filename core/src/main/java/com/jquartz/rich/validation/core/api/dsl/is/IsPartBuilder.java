@@ -42,8 +42,7 @@ public abstract class IsPartBuilder<T, IB extends IsPartBuilder<T, IB, CB>, CB e
         return is(ComparisonOperator.GREATER_THAN, literalPointerFactory.create(value));
     }
 
-
-    public <V> CB isGreaterOrEqualTo(V value) {
+    public <V> CB isGreaterOrCoequalTo(V value) {
         return is(ComparisonOperator.GREATER_OR_EQUAL_TO, literalPointerFactory.create(value));
     }
 
@@ -51,7 +50,7 @@ public abstract class IsPartBuilder<T, IB extends IsPartBuilder<T, IB, CB>, CB e
         return is(ComparisonOperator.LESS_THAN, literalPointerFactory.create(value));
     }
 
-    public <V> CB isLessOrEqualTo(V value) {
+    public <V> CB isLessOrCoequalTo(V value) {
         return is(ComparisonOperator.LESS_OR_EQUAL_TO, literalPointerFactory.create(value));
     }
 
@@ -87,7 +86,7 @@ public abstract class IsPartBuilder<T, IB extends IsPartBuilder<T, IB, CB>, CB e
         return is(ComparisonOperator.GREATER_THAN, fieldPointerFactory.create(targetClass, fieldName));
     }
 
-    public CB isGreaterOrEqualToField(String fieldName) {
+    public CB isGreaterOrCoequalToField(String fieldName) {
         return is(ComparisonOperator.GREATER_OR_EQUAL_TO, fieldPointerFactory.create(targetClass, fieldName));
     }
 
@@ -95,7 +94,7 @@ public abstract class IsPartBuilder<T, IB extends IsPartBuilder<T, IB, CB>, CB e
         return is(ComparisonOperator.LESS_THAN, fieldPointerFactory.create(targetClass, fieldName));
     }
 
-    public CB isLessOrEqualToField(String fieldName) {
+    public CB isLessOrCoequalToField(String fieldName) {
         return is(ComparisonOperator.LESS_OR_EQUAL_TO, fieldPointerFactory.create(targetClass, fieldName));
     }
 
