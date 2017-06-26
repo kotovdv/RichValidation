@@ -1,7 +1,6 @@
-package com.jquartz.rich.validation.core.expression.common;
+package com.jquartz.rich.validation.core.expression;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.expression.Expression;
 
 import static com.jquartz.rich.validation.core.api.textual.Tokens.OPTIONAL;
 

@@ -3,9 +3,9 @@ package com.jquartz.rich.validation.core.expression.junction;
 import com.google.common.base.Joiner;
 import com.jquartz.rich.validation.core.api.textual.Tokens;
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.expression.ConditionalExpression;
 import com.jquartz.rich.validation.core.expression.Expression;
-import com.jquartz.rich.validation.core.expression.common.OptionalExpression;
-import com.jquartz.rich.validation.core.expression.conditional.ConditionalExpression;
+import com.jquartz.rich.validation.core.expression.OptionalExpression;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
-package com.jquartz.rich.validation.core.expression.conditional;
+package com.jquartz.rich.validation.core.expression;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.expression.Expression;
 
 import javax.annotation.Nonnull;
 

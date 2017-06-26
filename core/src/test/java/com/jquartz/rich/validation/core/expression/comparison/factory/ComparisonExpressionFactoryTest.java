@@ -1,9 +1,11 @@
 package com.jquartz.rich.validation.core.expression.comparison.factory;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.expression.comparison.ComparisonExpression;
-import com.jquartz.rich.validation.core.pointer.FieldPointer;
-import com.jquartz.rich.validation.core.pointer.LiteralPointer;
+import com.jquartz.rich.validation.core.expression.Expression;
+import com.jquartz.rich.validation.core.pointer.field.FieldPointer;
+import com.jquartz.rich.validation.core.pointer.field.PlainFieldPointer;
+import com.jquartz.rich.validation.core.pointer.literal.LiteralPointer;
+import com.jquartz.rich.validation.core.pointer.literal.PlainLiteralPointer;
 import com.jquartz.rich.validation.core.subject.FloatingPointSubject;
 import org.junit.Test;
 
@@ -27,9 +29,10 @@ public class ComparisonExpressionFactoryTest {
     public void testFloatToDoubleComparison() throws Exception {
         FloatingPointSubject subject = new FloatingPointSubject(10.4);
         FieldPointer<Double, FloatingPointSubject> fieldPointer = createFieldPointer();
-        LiteralPointer<Float> literalPointer = new LiteralPointer<>(10.5F);
+        LiteralPointer<Float> literalPointer = new PlainLiteralPointer<>(10.5F, Float.TYPE);
 
-        ComparisonExpression<?, FloatingPointSubject> expression = comparisonExpressionFactory.create(
+
+        Expression<FloatingPointSubject> expression = comparisonExpressionFactory.create(
                 fieldPointer,
                 NOT_EQUAL_TO,
                 literalPointer);
@@ -49,9 +52,9 @@ public class ComparisonExpressionFactoryTest {
     public void testFloatWithDoubleComparison() throws Exception {
         FloatingPointSubject subject = new FloatingPointSubject(0.1D);
         FieldPointer<Double, FloatingPointSubject> fieldPointer = createFieldPointer();
-        LiteralPointer<Float> literalPointer = new LiteralPointer<>(0.1F);
+        PlainLiteralPointer<Float> literalPointer = new PlainLiteralPointer<>(0.1F, Float.TYPE);
 
-        ComparisonExpression<?, FloatingPointSubject> expression = comparisonExpressionFactory.create(
+        Expression<FloatingPointSubject> expression = comparisonExpressionFactory.create(
                 fieldPointer,
                 EQUAL_TO,
                 literalPointer);
@@ -64,7 +67,7 @@ public class ComparisonExpressionFactoryTest {
         Field field = targetClass.getDeclaredField(FIELD);
         field.setAccessible(true);
 
-        return new FieldPointer<>(
+        return new PlainFieldPointer<>(
                 targetClass,
                 Double.TYPE,
                 field);

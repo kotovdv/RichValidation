@@ -1,12 +1,15 @@
 package com.jquartz.rich.validation.core.expression.junction;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.expression.common.IsNullExpression;
-import com.jquartz.rich.validation.core.expression.comparison.ComparisonExpression;
-import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
-import com.jquartz.rich.validation.core.expression.conditional.ConditionalExpression;
-import com.jquartz.rich.validation.core.expression.value.LiteralValue;
-import com.jquartz.rich.validation.core.pointer.LiteralPointer;
+import com.jquartz.rich.validation.core.expression.ConditionalExpression;
+import com.jquartz.rich.validation.core.expression.Expression;
+import com.jquartz.rich.validation.core.expression.base.binary.LiteralToLiteralBinaryExpression;
+import com.jquartz.rich.validation.core.expression.base.binary.action.comparison.ComparisonAction;
+import com.jquartz.rich.validation.core.expression.base.unary.LiteralUnaryExpression;
+import com.jquartz.rich.validation.core.expression.base.unary.action.nullability.IsNotNullAction;
+import com.jquartz.rich.validation.core.expression.base.unary.action.nullability.IsNullAction;
+import com.jquartz.rich.validation.core.pointer.literal.LiteralPointer;
+import com.jquartz.rich.validation.core.pointer.literal.PlainLiteralPointer;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
@@ -14,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.jquartz.rich.validation.core.evaluation.TruthValue.*;
+import static com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator.GREATER_THAN;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,13 +29,14 @@ public class LogicalElseJunctionTest {
 
     @DataProvider
     public static Object[][] conditionExpressionDP() {
-        LiteralValue<Integer, Object> ten = new LiteralValue<>(new LiteralPointer<>(10));
-        LiteralValue<Integer, Object> five = new LiteralValue<>(new LiteralPointer<>(5));
-        LiteralValue<Integer, Object> nullValue = new LiteralValue<>(new LiteralPointer<>(null));
+        Class<Integer> type = Integer.class;
+        LiteralPointer<Integer> ten = new PlainLiteralPointer<>(10, type);
+        LiteralPointer<Integer> five = new PlainLiteralPointer<>(5, type);
+        LiteralPointer<Integer> nullValue = new PlainLiteralPointer<>(null, null);
 
-        ComparisonExpression<Integer, Object> validExpression = new ComparisonExpression<>(ten, ComparisonOperator.GREATER_THAN, five);
-        ComparisonExpression<Integer, Object> invalidExpression = new ComparisonExpression<>(five, ComparisonOperator.GREATER_THAN, ten);
-        ComparisonExpression<Integer, Object> unknownExpression = new ComparisonExpression<>(five, ComparisonOperator.GREATER_THAN, nullValue);
+        Expression<Object> validExpression = new LiteralToLiteralBinaryExpression(ten, new ComparisonAction<>(GREATER_THAN, type), five);
+        Expression<Object> invalidExpression = new LiteralToLiteralBinaryExpression(five, new ComparisonAction<>(GREATER_THAN, type), ten);
+        Expression<Object> unknownExpression = new LiteralToLiteralBinaryExpression(five, new ComparisonAction<>(GREATER_THAN, type), nullValue);
 
 
         ConditionalExpression<Object> applicableAndTrue = new ConditionalExpression<>(validExpression, validExpression);
@@ -67,8 +72,8 @@ public class LogicalElseJunctionTest {
                 {new LogicalElseJunction<>(asList(applicableAndUnknown, notApplicable)), UNKNOWN},
 
                 {new LogicalElseJunction<>(asList(notApplicable, notApplicable)), TRUE}, //Because of otherwise optional
-                {new LogicalElseJunction<>(asList(notApplicable, notApplicable), new IsNullExpression<>(new LiteralValue<>(new LiteralPointer<>(null)))), TRUE}, //Because of otherwise isNull
-                {new LogicalElseJunction<>(asList(notApplicable, notApplicable), new IsNullExpression<>(new LiteralValue<>(new LiteralPointer<>(new Object())))), FALSE}, //Because of otherwise  isNull
+                {new LogicalElseJunction<>(asList(notApplicable, notApplicable), new LiteralUnaryExpression<>(new PlainLiteralPointer<>(new Object(), Object.class), new IsNotNullAction())), TRUE}, //Because of otherwise isNull
+                {new LogicalElseJunction<>(asList(notApplicable, notApplicable), new LiteralUnaryExpression<>(new PlainLiteralPointer<>(new Object(), Object.class), new IsNullAction())), FALSE}, //Because of otherwise  isNull
         };
     }
 

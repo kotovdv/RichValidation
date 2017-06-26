@@ -34,4 +34,8 @@ public class Transformation<T> {
 
         return resultingType.cast(currentValue);
     }
+
+    public Class<T> getResultingType() {
+        return resultingType;
+    }
 }

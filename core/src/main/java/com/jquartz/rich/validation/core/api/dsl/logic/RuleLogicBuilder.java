@@ -1,13 +1,13 @@
 package com.jquartz.rich.validation.core.api.dsl.logic;
 
 import com.jquartz.rich.validation.core.Rule;
+import com.jquartz.rich.validation.core.expression.ConditionalExpression;
 import com.jquartz.rich.validation.core.expression.Expression;
-import com.jquartz.rich.validation.core.expression.common.OptionalExpression;
-import com.jquartz.rich.validation.core.expression.conditional.ConditionalExpression;
+import com.jquartz.rich.validation.core.expression.OptionalExpression;
 import com.jquartz.rich.validation.core.expression.junction.builder.LogicalElseJunctionBuilder;
 import com.jquartz.rich.validation.core.expression.junction.builder.LogicalOrJunctionBuilder;
 
-import static com.jquartz.rich.validation.core.api.dsl.logic.Pointer.TARGET;
+import static com.jquartz.rich.validation.core.api.dsl.logic.RulePartPointer.TARGET;
 
 public class RuleLogicBuilder<T> {
 
@@ -17,7 +17,7 @@ public class RuleLogicBuilder<T> {
     private LogicalOrJunctionBuilder<T> currentConditionJunction = new LogicalOrJunctionBuilder<>();
     private LogicalOrJunctionBuilder<T> currentTargetJunction = new LogicalOrJunctionBuilder<>();
     private LogicalOrJunctionBuilder<T> otherwiseJunction = new LogicalOrJunctionBuilder<>();
-    private Pointer pointer = TARGET;
+    private RulePartPointer pointer = TARGET;
 
     public RuleLogicBuilder(Class<T> targetClass, String targetFieldName) {
         this.targetClass = targetClass;
@@ -29,11 +29,11 @@ public class RuleLogicBuilder<T> {
     }
 
     public void switchToConditionPart() {
-        this.pointer = Pointer.CONDITION;
+        this.pointer = RulePartPointer.CONDITION;
     }
 
     public void switchToOtherwise() {
-        this.pointer = Pointer.OTHERWISE;
+        this.pointer = RulePartPointer.OTHERWISE;
     }
 
     public void startNewOrJunction() {

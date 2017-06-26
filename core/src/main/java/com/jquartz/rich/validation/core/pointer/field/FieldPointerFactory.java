@@ -1,4 +1,4 @@
-package com.jquartz.rich.validation.core.pointer;
+package com.jquartz.rich.validation.core.pointer.field;
 
 import com.jquartz.rich.validation.core.pointer.exception.InvalidFieldPointerException;
 
@@ -6,10 +6,10 @@ import java.lang.reflect.Field;
 
 public class FieldPointerFactory {
 
-    public <S> FieldPointer<?, S> createPointer(Class<S> sourceClass, String fieldName) {
+    public <S> FieldPointer<?, S> create(Class<S> sourceClass, String fieldName) {
         Field field = createFieldInstance(sourceClass, fieldName);
 
-        return new FieldPointer<>(sourceClass, field.getType(), field);
+        return new PlainFieldPointer<>(sourceClass, field.getType(), field);
     }
 
     private <S> Field createFieldInstance(Class<S> sourceClass, String fieldName) {
