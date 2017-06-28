@@ -2,6 +2,8 @@ package com.jquartz.rich.validation.core.expression.junction;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.evaluation.TruthValueBinaryOperator;
+import com.jquartz.rich.validation.core.evaluation.trust.EmptyTrustworthiness;
+import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.rule.ClassField;
 
@@ -30,6 +32,12 @@ public abstract class LogicalOperatorJunction<T> implements Expression<T> {
 
     @Override
     public TruthValue apply(@Nonnull T instance) {
+        return apply(instance, EmptyTrustworthiness.INSTANCE);
+    }
+
+
+    @Override
+    public TruthValue apply(T instance, Trustworthiness trustworthiness) {
         TruthValue result = defaultValue;
 
         for (Expression<T> expression : junctions) {
@@ -40,7 +48,7 @@ public abstract class LogicalOperatorJunction<T> implements Expression<T> {
     }
 
     @Override
-    public Collection<ClassField<T>> getAccomplices() {
+    public Collection<ClassField<?, T>> getAccomplices() {
         return junctions.stream()
                 .map(Expression::getAccomplices)
                 .flatMap(Collection::stream)

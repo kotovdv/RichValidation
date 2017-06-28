@@ -21,7 +21,7 @@ public class LiteralUnaryExpression<T> extends UnaryExpression<T, LiteralPointer
     }
 
     @Override
-    public Collection<ClassField<T>> getAccomplices() {
+    public Collection<ClassField<?, T>> getAccomplices() {
         return Collections.emptyList();
     }
 }

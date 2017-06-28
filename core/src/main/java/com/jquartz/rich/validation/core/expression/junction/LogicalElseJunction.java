@@ -3,6 +3,8 @@ package com.jquartz.rich.validation.core.expression.junction;
 import com.google.common.base.Joiner;
 import com.jquartz.rich.validation.core.api.textual.Tokens;
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.evaluation.trust.EmptyTrustworthiness;
+import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.expression.ConditionalExpression;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.OptionalExpression;
@@ -23,54 +25,59 @@ import static java.util.Collections.emptyList;
  */
 public class LogicalElseJunction<T> implements Expression<T> {
 
-  private final List<ConditionalExpression<T>> expressions = new ArrayList<>();
-  private final Expression<T> otherwise;
+    private final List<ConditionalExpression<T>> expressions = new ArrayList<>();
+    private final Expression<T> otherwise;
 
-  public LogicalElseJunction(Collection<ConditionalExpression<T>> expressions) {
-    this(expressions, new OptionalExpression<>());
-  }
-
-  public LogicalElseJunction(Collection<ConditionalExpression<T>> expressions,
-                             Expression<T> otherwise) {
-    this.expressions.addAll(expressions != null ? expressions : emptyList());
-    this.otherwise = otherwise;
-  }
-
-  @Override
-  public TruthValue apply(@Nonnull T subject) {
-    TruthValue hadApplicableExpression = FALSE;
-    for (ConditionalExpression<T> expression : expressions) {
-      TruthValue applicability = expression.isApplicable(subject);
-      if (applicability == TRUE) {
-        return expression.apply(subject);
-      }
-
-      hadApplicableExpression = hadApplicableExpression.or(applicability);
+    public LogicalElseJunction(Collection<ConditionalExpression<T>> expressions) {
+        this(expressions, new OptionalExpression<>());
     }
 
-    return hadApplicableExpression == FALSE
-        ? otherwise.apply(subject)
-        : UNKNOWN;
-  }
+    public LogicalElseJunction(Collection<ConditionalExpression<T>> expressions,
+                               Expression<T> otherwise) {
+        this.expressions.addAll(expressions != null ? expressions : emptyList());
+        this.otherwise = otherwise;
+    }
 
-  @Override
-  public String getTextualRepresentation() {
-    return Joiner.on(Tokens.ELSE.toString())
-        .join(expressions) + " " + OTHERWISE + " " + otherwise
-        .getTextualRepresentation();
-  }
+    @Override
+    public TruthValue apply(@Nonnull T subject) {
+        return apply(subject, EmptyTrustworthiness.INSTANCE);
+    }
 
-  @Override
-  public String toString() {
-    return getTextualRepresentation();
-  }
+    @Override
+    public TruthValue apply(T subject, Trustworthiness trustworthiness) {
+        TruthValue hadApplicableExpression = FALSE;
+        for (ConditionalExpression<T> expression : expressions) {
+            TruthValue applicability = expression.isApplicable(subject);
+            if (applicability == TRUE) {
+                return expression.apply(subject);
+            }
 
-  @Override
-  public Collection<ClassField<T>> getAccomplices() {
-    return expressions.stream()
-        .map(ConditionalExpression::getAccomplices)
-        .flatMap(Collection::stream)
-        .collect(Collectors.toList());
-    //TODO ADD OTHERWISE
-  }
+            hadApplicableExpression = hadApplicableExpression.or(applicability);
+        }
+
+        return hadApplicableExpression == FALSE
+                ? otherwise.apply(subject)
+                : UNKNOWN;
+    }
+
+    @Override
+    public String getTextualRepresentation() {
+        return Joiner.on(Tokens.ELSE.toString())
+                .join(expressions) + " " + OTHERWISE + " " + otherwise
+                .getTextualRepresentation();
+    }
+
+    @Override
+    public String toString() {
+        return getTextualRepresentation();
+    }
+
+    @Override
+    public Collection<ClassField<?, T>> getAccomplices() {
+        return expressions.stream()
+                .map(ConditionalExpression::getAccomplices)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+        //TODO ADD OTHERWISE
+    }
 }

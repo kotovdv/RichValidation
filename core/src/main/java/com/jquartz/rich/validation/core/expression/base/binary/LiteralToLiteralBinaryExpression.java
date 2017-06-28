@@ -27,7 +27,7 @@ public class LiteralToLiteralBinaryExpression extends
     }
 
     @Override
-    public Collection<ClassField<Object>> getAccomplices() {
+    public Collection<ClassField<?, Object>> getAccomplices() {
         return Collections.emptyList();
     }
 }

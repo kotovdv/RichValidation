@@ -1,6 +1,7 @@
 package com.jquartz.rich.validation.core.pointer.field;
 
 import com.jquartz.rich.validation.core.expression.comparison.factory.transformation.Transformation;
+import com.jquartz.rich.validation.core.rule.ClassField;
 
 public class TransformedFieldPointer<T, S> implements FieldPointer<T, S> {
     private final FieldPointer<?, S> initialPointer;
@@ -15,6 +16,15 @@ public class TransformedFieldPointer<T, S> implements FieldPointer<T, S> {
     @Override
     public T resolve(S source) {
         return transformationSequence.applyTransformation(initialPointer.resolve(source));
+    }
+
+    @Override
+    public ClassField<T, S> getTarget() {
+        return new ClassField<>(
+                initialPointer.getSourceClass(),
+                transformationSequence.getResultingType(),
+                initialPointer.getFieldName()
+        );
     }
 
     @Override

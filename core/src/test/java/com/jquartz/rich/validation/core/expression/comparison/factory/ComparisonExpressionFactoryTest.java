@@ -6,6 +6,7 @@ import com.jquartz.rich.validation.core.pointer.field.FieldPointer;
 import com.jquartz.rich.validation.core.pointer.field.PlainFieldPointer;
 import com.jquartz.rich.validation.core.pointer.literal.LiteralPointer;
 import com.jquartz.rich.validation.core.pointer.literal.PlainLiteralPointer;
+import com.jquartz.rich.validation.core.rule.ClassField;
 import com.jquartz.rich.validation.core.subject.FloatingPointSubject;
 import org.junit.Test;
 
@@ -67,9 +68,6 @@ public class ComparisonExpressionFactoryTest {
         Field field = targetClass.getDeclaredField(FIELD);
         field.setAccessible(true);
 
-        return new PlainFieldPointer<>(
-                targetClass,
-                Double.TYPE,
-                field);
+        return new PlainFieldPointer<>(new ClassField<>(targetClass, Double.TYPE, field.getName()), field);
     }
 }

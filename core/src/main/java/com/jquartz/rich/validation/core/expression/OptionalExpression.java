@@ -1,6 +1,8 @@
 package com.jquartz.rich.validation.core.expression;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.evaluation.trust.EmptyTrustworthiness;
+import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.rule.ClassField;
 
 import java.util.Collection;
@@ -14,6 +16,11 @@ import static com.jquartz.rich.validation.core.api.textual.Tokens.OPTIONAL;
 public class OptionalExpression<T> implements Expression<T> {
     @Override
     public TruthValue apply(T subject) {
+        return apply(subject, EmptyTrustworthiness.INSTANCE);
+    }
+
+    @Override
+    public TruthValue apply(T subject, Trustworthiness trustworthiness) {
         return TruthValue.TRUE;
     }
 
@@ -23,7 +30,7 @@ public class OptionalExpression<T> implements Expression<T> {
     }
 
     @Override
-    public Collection<ClassField<T>> getAccomplices() {
+    public Collection<ClassField<?, T>> getAccomplices() {
         return Collections.emptyList();
     }
 

@@ -42,7 +42,7 @@ public class ConditionalExpression<T> {
         return getTextualRepresentation();
     }
 
-    public Collection<ClassField<T>> getAccomplices() {
+    public Collection<ClassField<?, T>> getAccomplices() {
         return Stream
                 .of(condition.getAccomplices(), mustBe.getAccomplices())
                 .flatMap(Collection::stream)

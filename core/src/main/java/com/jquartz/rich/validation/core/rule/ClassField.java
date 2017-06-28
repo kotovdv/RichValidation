@@ -1,17 +1,23 @@
 package com.jquartz.rich.validation.core.rule;
 
-public class ClassField<T> {
+public class ClassField<T, S> {
 
-    private final Class<T> ownerClass;
+    private final Class<S> sourceClass;
+    private final Class<T> fieldClass;
     private final String fieldName;
 
-    public ClassField(Class<T> ownerClass, String fieldName) {
-        this.ownerClass = ownerClass;
+    public ClassField(Class<S> sourceClass, Class<T> fieldClass, String fieldName) {
+        this.sourceClass = sourceClass;
+        this.fieldClass = fieldClass;
         this.fieldName = fieldName;
     }
 
-    public Class<T> getOwnerClass() {
-        return ownerClass;
+    public Class<S> getSourceClass() {
+        return sourceClass;
+    }
+
+    public Class<T> getFieldClass() {
+        return fieldClass;
     }
 
     public String getFieldName() {
@@ -21,17 +27,19 @@ public class ClassField<T> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ClassField)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        ClassField target = (ClassField) o;
+        ClassField<?, ?> that = (ClassField<?, ?>) o;
 
-        if (!ownerClass.equals(target.ownerClass)) return false;
-        return fieldName.equals(target.fieldName);
+        if (!sourceClass.equals(that.sourceClass)) return false;
+        if (!fieldClass.equals(that.fieldClass)) return false;
+        return fieldName.equals(that.fieldName);
     }
 
     @Override
     public int hashCode() {
-        int result = ownerClass.hashCode();
+        int result = sourceClass.hashCode();
+        result = 31 * result + fieldClass.hashCode();
         result = 31 * result + fieldName.hashCode();
         return result;
     }
@@ -39,7 +47,8 @@ public class ClassField<T> {
     @Override
     public String toString() {
         return "ClassField{" +
-                "ownerClass=" + ownerClass +
+                "sourceClass=" + sourceClass +
+                ", fieldClass=" + fieldClass +
                 ", fieldName='" + fieldName + '\'' +
                 '}';
     }

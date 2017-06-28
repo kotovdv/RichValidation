@@ -1,18 +1,17 @@
 package com.jquartz.rich.validation.core.pointer.field;
 
 import com.jquartz.rich.validation.core.pointer.exception.FailedToExtractFieldValueException;
+import com.jquartz.rich.validation.core.rule.ClassField;
 
 import java.lang.reflect.Field;
 
 public class PlainFieldPointer<T, S> implements FieldPointer<T, S> {
 
-    private final Class<S> sourceClass;
-    private final Class<T> targetClass;
+    private final ClassField<T, S> target;
     private final Field field;
 
-    public PlainFieldPointer(Class<S> sourceClass, Class<T> targetClass, Field field) {
-        this.sourceClass = sourceClass;
-        this.targetClass = targetClass;
+    public PlainFieldPointer(ClassField<T, S> target, Field field) {
+        this.target = target;
         this.field = field;
     }
 
@@ -21,13 +20,18 @@ public class PlainFieldPointer<T, S> implements FieldPointer<T, S> {
         try {
             return (T) field.get(source);
         } catch (IllegalAccessException e) {
-            throw new FailedToExtractFieldValueException(sourceClass, field.getName(), e);
+            throw new FailedToExtractFieldValueException(target.getSourceClass(), field.getName(), e);
         }
     }
 
     @Override
+    public ClassField<T, S> getTarget() {
+        return target;
+    }
+
+    @Override
     public Class<T> getPointedClass() {
-        return targetClass;
+        return target.getFieldClass();
     }
 
     @Override
@@ -37,15 +41,11 @@ public class PlainFieldPointer<T, S> implements FieldPointer<T, S> {
 
     @Override
     public Class<S> getSourceClass() {
-        return sourceClass;
-    }
-
-    public Class<T> getTargetClass() {
-        return targetClass;
+        return target.getSourceClass();
     }
 
     public String getTextualRepresentation() {
-        return sourceClass.getSimpleName() + "." + field.getName();
+        return target.getSourceClass().getSimpleName() + "." + field.getName();
     }
 
     @Override

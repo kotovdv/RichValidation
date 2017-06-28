@@ -8,10 +8,13 @@ import com.jquartz.rich.validation.core.expression.junction.builder.LogicalElseJ
 import com.jquartz.rich.validation.core.expression.junction.builder.LogicalOrJunctionBuilder;
 import com.jquartz.rich.validation.core.rule.ClassField;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static com.jquartz.rich.validation.core.api.dsl.logic.RulePartPointer.TARGET;
 
 public class RuleLogicBuilder<T> {
 
+    private static AtomicInteger counter = new AtomicInteger(0);
     private final Class<T> targetClass;
     private final String targetFieldName;
     private LogicalElseJunctionBuilder<T> ruleLogic = new LogicalElseJunctionBuilder<>();
@@ -67,7 +70,12 @@ public class RuleLogicBuilder<T> {
             ruleLogic.setOtherwise(otherwiseJunction.build());
         }
 
-        return new Rule<>(new ClassField<>(targetClass, targetFieldName), ruleLogic.build());
+        //TODO FIX ME PLS NULL IN CLASSFIELD
+//        throw new RuntimeException();
+        return new Rule<>(
+                new ClassField<>(targetClass, null, targetFieldName),
+                Integer.toString(counter.incrementAndGet()),
+                ruleLogic.build());
     }
 
     public Class<T> getTargetClass() {

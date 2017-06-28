@@ -1,10 +1,9 @@
 package com.jquartz.rich.validation.core.expression.base;
 
-import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.base.unary.action.UnaryAction;
 import com.jquartz.rich.validation.core.pointer.Pointer;
 
-public abstract class UnaryExpression<T, O extends Pointer> implements Expression<T> {
+public abstract class UnaryExpression<T, O extends Pointer> extends AbstractExpression<T> {
 
     protected final O operand;
     protected final UnaryAction action;
