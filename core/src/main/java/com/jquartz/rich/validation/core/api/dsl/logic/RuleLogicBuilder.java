@@ -15,17 +15,15 @@ import static com.jquartz.rich.validation.core.api.dsl.logic.RulePartPointer.TAR
 public class RuleLogicBuilder<T> {
 
     private static AtomicInteger counter = new AtomicInteger(0);
-    private final Class<T> targetClass;
-    private final String targetFieldName;
+    private final ClassField<?, T> target;
     private LogicalElseJunctionBuilder<T> ruleLogic = new LogicalElseJunctionBuilder<>();
     private LogicalOrJunctionBuilder<T> currentConditionJunction = new LogicalOrJunctionBuilder<>();
     private LogicalOrJunctionBuilder<T> currentTargetJunction = new LogicalOrJunctionBuilder<>();
     private LogicalOrJunctionBuilder<T> otherwiseJunction = new LogicalOrJunctionBuilder<>();
     private RulePartPointer pointer = TARGET;
 
-    public RuleLogicBuilder(Class<T> targetClass, String targetFieldName) {
-        this.targetClass = targetClass;
-        this.targetFieldName = targetFieldName;
+    public RuleLogicBuilder(ClassField<?, T> target) {
+        this.target = target;
     }
 
     public void switchToMustPart() {
@@ -70,20 +68,18 @@ public class RuleLogicBuilder<T> {
             ruleLogic.setOtherwise(otherwiseJunction.build());
         }
 
-        //TODO FIX ME PLS NULL IN CLASSFIELD
-//        throw new RuntimeException();
         return new Rule<>(
-                new ClassField<>(targetClass, null, targetFieldName),
+                target,
                 Integer.toString(counter.incrementAndGet()),
                 ruleLogic.build());
     }
 
     public Class<T> getTargetClass() {
-        return targetClass;
+        return target.getSourceClass();
     }
 
     public String getTargetFieldName() {
-        return targetFieldName;
+        return target.getFieldName();
     }
 
     private LogicalOrJunctionBuilder<T> getTargetJunction() {

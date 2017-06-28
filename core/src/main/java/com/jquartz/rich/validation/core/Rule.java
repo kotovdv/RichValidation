@@ -1,6 +1,7 @@
 package com.jquartz.rich.validation.core;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.rule.ClassField;
 
@@ -24,6 +25,10 @@ public class Rule<T> {
 
     public TruthValue validate(T instance) {
         return expression.apply(instance);
+    }
+
+    public TruthValue validate(T instance, Trustworthiness trustworthiness) {
+        return expression.apply(instance, trustworthiness);
     }
 
     public String getTextualRepresentation() {
@@ -54,8 +59,11 @@ public class Rule<T> {
 
     @Override
     public int hashCode() {
-        int result = target.hashCode();
+        int result = 0;
+
+        result = target.hashCode();
         result = 31 * result + ruleName.hashCode();
+
         return result;
     }
 

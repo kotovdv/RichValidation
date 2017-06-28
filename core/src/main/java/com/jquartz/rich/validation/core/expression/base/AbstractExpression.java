@@ -1,7 +1,7 @@
 package com.jquartz.rich.validation.core.expression.base;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.evaluation.trust.EmptyTrustworthiness;
+import com.jquartz.rich.validation.core.evaluation.trust.TrustworthinessStub;
 import com.jquartz.rich.validation.core.expression.Expression;
 
 /**
@@ -10,8 +10,7 @@ import com.jquartz.rich.validation.core.expression.Expression;
 public abstract class AbstractExpression<T> implements Expression<T> {
 
     @Override
-    public TruthValue apply(T subject) {
-        return apply(subject, EmptyTrustworthiness.INSTANCE);
+    public final TruthValue apply(T subject) {
+        return apply(subject, TrustworthinessStub.INSTANCE);
     }
-
 }

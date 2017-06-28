@@ -1,6 +1,7 @@
 package com.jquartz.rich.validation.core.expression;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.rule.ClassField;
 
 import javax.annotation.Nonnull;
@@ -32,6 +33,10 @@ public class ConditionalExpression<T> {
         return mustBe.apply(subject);
     }
 
+    public TruthValue apply(@Nonnull T subject, Trustworthiness trustworthiness) {
+        return mustBe.apply(subject, trustworthiness);
+    }
+
     public String getTextualRepresentation() {
         return ENSURE_THAT + " " + mustBe.getTextualRepresentation() + " "
                 + WHEN + " " + condition.getTextualRepresentation();
@@ -43,8 +48,7 @@ public class ConditionalExpression<T> {
     }
 
     public Collection<ClassField<?, T>> getAccomplices() {
-        return Stream
-                .of(condition.getAccomplices(), mustBe.getAccomplices())
+        return Stream.of(condition.getAccomplices(), mustBe.getAccomplices())
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }

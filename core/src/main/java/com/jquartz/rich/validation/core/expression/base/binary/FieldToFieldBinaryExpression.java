@@ -1,6 +1,5 @@
 package com.jquartz.rich.validation.core.expression.base.binary;
 
-import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.expression.base.BinaryExpression;
 import com.jquartz.rich.validation.core.expression.base.binary.action.BinaryAction;
@@ -20,13 +19,18 @@ public class FieldToFieldBinaryExpression<T> extends BinaryExpression<T, FieldPo
     }
 
     @Override
-    public TruthValue apply(T subject, Trustworthiness trustworthiness) {
-        boolean leftIsTrustworthy = trustworthiness.isTrustworthy(leftOperand.getTarget());
-        boolean rightIsTrustworthy = trustworthiness.isTrustworthy(rightOperand.getTarget());
+    protected boolean areOperandsTrustworthy(Trustworthiness trustworthiness) {
+        return trustworthiness.isTrustworthy(leftOperand.getTarget()) && trustworthiness.isTrustworthy(rightOperand.getTarget());
+    }
 
-        return leftIsTrustworthy && rightIsTrustworthy
-                ? action.apply(leftOperand.resolve(subject), rightOperand.resolve(subject))
-                : TruthValue.UNKNOWN;
+    @Override
+    protected Object resolveLeftOperand(FieldPointer<?, T> leftOperand, T source) {
+        return leftOperand.resolve(source);
+    }
+
+    @Override
+    protected Object resolveRightOperand(FieldPointer<?, T> rightOperand, T source) {
+        return rightOperand.resolve(source);
     }
 
     @Override

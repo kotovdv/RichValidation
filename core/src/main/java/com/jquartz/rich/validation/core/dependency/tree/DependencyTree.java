@@ -2,7 +2,8 @@ package com.jquartz.rich.validation.core.dependency.tree;
 
 import com.jquartz.rich.validation.core.dependency.tree.node.Node;
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
+import com.jquartz.rich.validation.core.evaluation.trust.TrustworthinessContainer;
+import com.jquartz.rich.validation.core.rule.ClassField;
 
 public class DependencyTree<T> {
 
@@ -13,6 +14,10 @@ public class DependencyTree<T> {
     }
 
     public TruthValue validate(T source) {
-        return rootNode.validate(source, new Trustworthiness());
+        return rootNode.validate(source, new TrustworthinessContainer());
+    }
+
+    public ClassField<?, T> getTarget() {
+        return rootNode.getTargetField();
     }
 }

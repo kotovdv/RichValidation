@@ -32,24 +32,18 @@ public class ClassField<T, S> {
         ClassField<?, ?> that = (ClassField<?, ?>) o;
 
         if (!sourceClass.equals(that.sourceClass)) return false;
-        if (!fieldClass.equals(that.fieldClass)) return false;
         return fieldName.equals(that.fieldName);
     }
 
     @Override
     public int hashCode() {
         int result = sourceClass.hashCode();
-        result = 31 * result + fieldClass.hashCode();
         result = 31 * result + fieldName.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "ClassField{" +
-                "sourceClass=" + sourceClass +
-                ", fieldClass=" + fieldClass +
-                ", fieldName='" + fieldName + '\'' +
-                '}';
+        return sourceClass.getSimpleName() + "." + fieldName;
     }
 }

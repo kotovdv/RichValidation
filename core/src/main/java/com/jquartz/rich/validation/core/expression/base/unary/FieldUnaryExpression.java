@@ -1,7 +1,5 @@
 package com.jquartz.rich.validation.core.expression.base.unary;
 
-import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.evaluation.trust.EmptyTrustworthiness;
 import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.expression.base.UnaryExpression;
 import com.jquartz.rich.validation.core.expression.base.unary.action.UnaryAction;
@@ -19,27 +17,17 @@ public class FieldUnaryExpression<T> extends UnaryExpression<T, FieldPointer<?, 
     }
 
     @Override
-    public TruthValue apply(T subject) {
-        return this.apply(subject, EmptyTrustworthiness.INSTANCE);
+    protected boolean isOperandTrustworthy(FieldPointer<?, T> operand, Trustworthiness trustworthiness) {
+        return trustworthiness.isTrustworthy(operand.getTarget());
     }
 
     @Override
-    public TruthValue apply(T subject, Trustworthiness trustworthiness) {
-        ClassField<?, T> target = operand.getTarget();
-
-        TruthValue validationResult = trustworthiness.isTrustworthy(target)
-                ? action.apply(operand.resolve(subject))
-                : TruthValue.UNKNOWN;
-
-        trustworthiness.associateValidationResult(target, validationResult);
-
-        return validationResult;
+    protected Object resolveOperand(FieldPointer<?, T> operand, T subject) {
+        return operand.resolve(subject);
     }
 
     @Override
     public Collection<ClassField<?, T>> getAccomplices() {
         return singleton(operand.getTarget());
     }
-
-
 }

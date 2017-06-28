@@ -2,7 +2,7 @@ package com.jquartz.rich.validation.core.dependency.tree.node;
 
 import com.jquartz.rich.validation.core.Rule;
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
+import com.jquartz.rich.validation.core.evaluation.trust.TrustworthinessContainer;
 import com.jquartz.rich.validation.core.rule.ClassField;
 
 import java.util.ArrayList;
@@ -22,12 +22,12 @@ public class Node<T> {
         this.rule = rule;
     }
 
-    public TruthValue validate(T instance, Trustworthiness trustworthiness) {
+    public TruthValue validate(T instance, TrustworthinessContainer trustworthiness) {
         for (Node<T> child : children) {
             child.validate(instance, trustworthiness);
         }
 
-        TruthValue validationResult = rule.validate(instance);
+        TruthValue validationResult = rule.validate(instance, trustworthiness);
         trustworthiness.associateValidationResult(targetField, validationResult);
 
         return validationResult;
@@ -48,6 +48,10 @@ public class Node<T> {
 
     public boolean removeCycledCase(Node<T> suspect) {
         return removeCycledCase(this, suspect);
+    }
+
+    public ClassField<?, T> getTargetField() {
+        return targetField;
     }
 
     /**

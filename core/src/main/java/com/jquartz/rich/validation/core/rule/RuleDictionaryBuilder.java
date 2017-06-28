@@ -23,7 +23,7 @@ public class RuleDictionaryBuilder {
     }
 
     public RuleDictionary build() {
-        Multimap<Class<?>, DependencyTree<?>> dependencyTrees = HashMultimap.create();
+        Multimap<Class<?>, DependencyTree> dependencyTrees = HashMultimap.create();
 
         for (Map.Entry<Class<?>, Rule<?>> entry : classToRules.entries()) {
             Class<?> targetClass = entry.getKey();
@@ -38,19 +38,19 @@ public class RuleDictionaryBuilder {
         return new RuleDictionary(dependencyTrees);
     }
 
-    private Node<?> createTreeStructure(Rule<?> targetRule) {
-        Node<?> rootNode = new Node(null, targetRule.getTarget(), targetRule);
+    private <T> Node<T> createTreeStructure(Rule<T> targetRule) {
+        Node<T> rootNode = new Node<>(null, targetRule.getTarget(), targetRule);
         fillDependencyTree(rootNode, targetRule.getAccomplices());
 
         return rootNode;
     }
 
-    private void fillDependencyTree(Node<?> parentNode, Collection<? extends ClassField<?, ?>> accomplices) {
+    private <T> void fillDependencyTree(Node<T> parentNode, Collection<? extends ClassField<?, ?>> accomplices) {
         for (ClassField<?, ?> accomplice : accomplices) {
-            Collection<Rule<?>> rules = fieldToRules.get(accomplice);
+            Collection<Rule<?>> rules = getRules(accomplice);
 
             for (Rule<?> rule : rules) {
-                Node newNode = new Node(parentNode, accomplice, rule);
+                Node<T> newNode = createNewNode(parentNode, accomplice, rule);
                 boolean hadCycledCase = parentNode.removeCycledCase(newNode);
                 if (hadCycledCase) {
                     continue;
@@ -62,5 +62,14 @@ public class RuleDictionaryBuilder {
                 fillDependencyTree(newNode, targetRuleAccomplices);
             }
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> Node<T> createNewNode(Node<T> parentNode, ClassField<?, ?> accomplice, Rule<?> rule) {
+        return (Node<T>) new Node(parentNode, accomplice, rule);
+    }
+
+    private <T> Collection<Rule<?>> getRules(ClassField<?, T> accomplice) {
+        return fieldToRules.get(accomplice);
     }
 }

@@ -3,14 +3,13 @@ package com.jquartz.rich.validation.core.expression.junction;
 import com.google.common.base.Joiner;
 import com.jquartz.rich.validation.core.api.textual.Tokens;
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
-import com.jquartz.rich.validation.core.evaluation.trust.EmptyTrustworthiness;
 import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.expression.ConditionalExpression;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.OptionalExpression;
+import com.jquartz.rich.validation.core.expression.base.AbstractExpression;
 import com.jquartz.rich.validation.core.rule.ClassField;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,7 +22,7 @@ import static java.util.Collections.emptyList;
 /**
  * @author Dmitriy Kotov
  */
-public class LogicalElseJunction<T> implements Expression<T> {
+public class LogicalElseJunction<T> extends AbstractExpression<T> {
 
     private final List<ConditionalExpression<T>> expressions = new ArrayList<>();
     private final Expression<T> otherwise;
@@ -32,15 +31,9 @@ public class LogicalElseJunction<T> implements Expression<T> {
         this(expressions, new OptionalExpression<>());
     }
 
-    public LogicalElseJunction(Collection<ConditionalExpression<T>> expressions,
-                               Expression<T> otherwise) {
+    public LogicalElseJunction(Collection<ConditionalExpression<T>> expressions, Expression<T> otherwise) {
         this.expressions.addAll(expressions != null ? expressions : emptyList());
         this.otherwise = otherwise;
-    }
-
-    @Override
-    public TruthValue apply(@Nonnull T subject) {
-        return apply(subject, EmptyTrustworthiness.INSTANCE);
     }
 
     @Override
@@ -49,14 +42,14 @@ public class LogicalElseJunction<T> implements Expression<T> {
         for (ConditionalExpression<T> expression : expressions) {
             TruthValue applicability = expression.isApplicable(subject);
             if (applicability == TRUE) {
-                return expression.apply(subject);
+                return expression.apply(subject, trustworthiness);
             }
 
             hadApplicableExpression = hadApplicableExpression.or(applicability);
         }
 
         return hadApplicableExpression == FALSE
-                ? otherwise.apply(subject)
+                ? otherwise.apply(subject, trustworthiness)
                 : UNKNOWN;
     }
 

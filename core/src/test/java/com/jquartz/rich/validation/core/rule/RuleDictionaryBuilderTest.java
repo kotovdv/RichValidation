@@ -1,7 +1,6 @@
 package com.jquartz.rich.validation.core.rule;
 
 import com.jquartz.rich.validation.core.Rule;
-import com.jquartz.rich.validation.core.subject.FloatingPointIntegrationTestSubject;
 import com.jquartz.rich.validation.core.subject.TwoFieldsSubject;
 import org.junit.Test;
 
@@ -29,13 +28,15 @@ public class RuleDictionaryBuilderTest {
                 .submit(secondFieldRule)
                 .build();
 
+        dictionary.validate(new TwoFieldsSubject(100, -10));
+
         System.out.println(dictionary);
     }
 
 
     @Test
     public void testCycledCase() throws Exception {
-        Rule<FloatingPointIntegrationTestSubject> firstFieldRule = ensureThat(
+/*        Rule<FloatingPointIntegrationTestSubject> firstFieldRule = ensureThat(
                 FloatingPointIntegrationTestSubject.class)
                 .field(FloatingPointIntegrationTestSubject.FIRST_FIELD)
                 .isGreaterThanField(FloatingPointIntegrationTestSubject.SECOND_FIELD)
@@ -61,7 +62,7 @@ public class RuleDictionaryBuilderTest {
                 .submit(thirdFieldRule)
                 .build();
 
-        System.out.println(dictionary);
+        System.out.println(dictionary);*/
 
 
     }

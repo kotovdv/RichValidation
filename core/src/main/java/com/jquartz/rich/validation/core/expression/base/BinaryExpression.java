@@ -20,19 +20,24 @@ public abstract class BinaryExpression<T, L extends Pointer, R extends Pointer> 
     }
 
     @Override
-    public TruthValue apply(T subject, Trustworthiness trustworthiness) {
-        return TruthValue.UNKNOWN;
-    }
-
-    @Override
     public String getTextualRepresentation() {
         return leftOperand.getTextualRepresentation() + " " +
                 action.getTextualRepresentation() + " " +
                 rightOperand.getTextualRepresentation() + " ";
     }
 
+    @Override
+    public final TruthValue apply(T subject, Trustworthiness trustworthiness) {
+        return areOperandsTrustworthy(trustworthiness)
+                ? action.apply(resolveLeftOperand(leftOperand, subject), resolveRightOperand(rightOperand, subject))
+                : TruthValue.UNKNOWN;
+    }
 
-    public abstract boolean areOperandsTrustworthy();
+    protected abstract boolean areOperandsTrustworthy(Trustworthiness trustworthiness);
+
+    protected abstract Object resolveLeftOperand(L leftOperand, T source);
+
+    protected abstract Object resolveRightOperand(R rightOperand, T source);
 
     @Override
     public String toString() {

@@ -2,12 +2,11 @@ package com.jquartz.rich.validation.core.expression.junction;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.evaluation.TruthValueBinaryOperator;
-import com.jquartz.rich.validation.core.evaluation.trust.EmptyTrustworthiness;
 import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.expression.Expression;
+import com.jquartz.rich.validation.core.expression.base.AbstractExpression;
 import com.jquartz.rich.validation.core.rule.ClassField;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 
-public abstract class LogicalOperatorJunction<T> implements Expression<T> {
+public abstract class LogicalOperatorJunction<T> extends AbstractExpression<T> {
 
     private final TruthValueBinaryOperator binaryOperator;
     private final TruthValue defaultValue;
@@ -29,19 +28,12 @@ public abstract class LogicalOperatorJunction<T> implements Expression<T> {
         this.defaultValue = defaultValue;
     }
 
-
-    @Override
-    public TruthValue apply(@Nonnull T instance) {
-        return apply(instance, EmptyTrustworthiness.INSTANCE);
-    }
-
-
     @Override
     public TruthValue apply(T instance, Trustworthiness trustworthiness) {
         TruthValue result = defaultValue;
 
         for (Expression<T> expression : junctions) {
-            result = binaryOperator.apply(result, expression.apply(instance));
+            result = binaryOperator.apply(result, expression.apply(instance, trustworthiness));
         }
 
         return result;
