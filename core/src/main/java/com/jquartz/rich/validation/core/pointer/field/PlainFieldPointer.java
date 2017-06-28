@@ -30,6 +30,12 @@ public class PlainFieldPointer<T, S> implements FieldPointer<T, S> {
         return targetClass;
     }
 
+    @Override
+    public String getFieldName() {
+        return field.getName();
+    }
+
+    @Override
     public Class<S> getSourceClass() {
         return sourceClass;
     }

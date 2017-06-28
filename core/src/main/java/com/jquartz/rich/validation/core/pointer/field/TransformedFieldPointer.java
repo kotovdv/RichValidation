@@ -23,6 +23,16 @@ public class TransformedFieldPointer<T, S> implements FieldPointer<T, S> {
     }
 
     @Override
+    public Class<S> getSourceClass() {
+        return initialPointer.getSourceClass();
+    }
+
+    @Override
+    public String getFieldName() {
+        return initialPointer.getFieldName();
+    }
+
+    @Override
     public String getTextualRepresentation() {
         return initialPointer.getTextualRepresentation();
     }

@@ -5,8 +5,13 @@ import com.jquartz.rich.validation.core.expression.base.BinaryExpression;
 import com.jquartz.rich.validation.core.expression.base.binary.action.BinaryAction;
 import com.jquartz.rich.validation.core.pointer.field.FieldPointer;
 import com.jquartz.rich.validation.core.pointer.literal.LiteralPointer;
+import com.jquartz.rich.validation.core.rule.ClassField;
 
-public class FieldToLiteralBinaryExpression<T> extends BinaryExpression<T, FieldPointer<?, T>, LiteralPointer<?>> {
+import java.util.Collection;
+import java.util.Collections;
+
+public class FieldToLiteralBinaryExpression<T> extends
+        BinaryExpression<T, FieldPointer<?, T>, LiteralPointer<?>> {
 
     public FieldToLiteralBinaryExpression(FieldPointer<?, T> leftOperand,
                                           BinaryAction action,
@@ -20,5 +25,11 @@ public class FieldToLiteralBinaryExpression<T> extends BinaryExpression<T, Field
                 leftOperand.resolve(subject),
                 rightOperand.resolve()
         );
+    }
+
+    @Override
+    public Collection<ClassField<T>> getAccomplices() {
+        return Collections
+                .singleton(new ClassField<>(leftOperand.getSourceClass(), leftOperand.getFieldName()));
     }
 }

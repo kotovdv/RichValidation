@@ -4,8 +4,13 @@ import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.expression.base.BinaryExpression;
 import com.jquartz.rich.validation.core.expression.base.binary.action.BinaryAction;
 import com.jquartz.rich.validation.core.pointer.literal.LiteralPointer;
+import com.jquartz.rich.validation.core.rule.ClassField;
 
-public class LiteralToLiteralBinaryExpression extends BinaryExpression<Object, LiteralPointer<?>, LiteralPointer<?>> {
+import java.util.Collection;
+import java.util.Collections;
+
+public class LiteralToLiteralBinaryExpression extends
+        BinaryExpression<Object, LiteralPointer<?>, LiteralPointer<?>> {
 
     public LiteralToLiteralBinaryExpression(LiteralPointer<?> leftOperand,
                                             BinaryAction action,
@@ -19,5 +24,10 @@ public class LiteralToLiteralBinaryExpression extends BinaryExpression<Object, L
                 leftOperand.resolve(),
                 rightOperand.resolve()
         );
+    }
+
+    @Override
+    public Collection<ClassField<Object>> getAccomplices() {
+        return Collections.emptyList();
     }
 }

@@ -9,9 +9,9 @@ public abstract class UnaryExpression<T, O extends Pointer> implements Expressio
     protected final O operand;
     protected final UnaryAction action;
 
-    protected UnaryExpression(O operand, UnaryAction unaryAction) {
+    protected UnaryExpression(O operand, UnaryAction action) {
         this.operand = operand;
-        this.action = unaryAction;
+        this.action = action;
     }
 
     @Override

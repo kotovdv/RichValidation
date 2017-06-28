@@ -6,6 +6,7 @@ import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.OptionalExpression;
 import com.jquartz.rich.validation.core.expression.junction.builder.LogicalElseJunctionBuilder;
 import com.jquartz.rich.validation.core.expression.junction.builder.LogicalOrJunctionBuilder;
+import com.jquartz.rich.validation.core.rule.ClassField;
 
 import static com.jquartz.rich.validation.core.api.dsl.logic.RulePartPointer.TARGET;
 
@@ -66,7 +67,7 @@ public class RuleLogicBuilder<T> {
             ruleLogic.setOtherwise(otherwiseJunction.build());
         }
 
-        return new Rule<>(ruleLogic.build());
+        return new Rule<>(new ClassField<>(targetClass, targetFieldName), ruleLogic.build());
     }
 
     public Class<T> getTargetClass() {

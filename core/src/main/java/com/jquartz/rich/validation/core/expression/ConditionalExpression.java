@@ -1,8 +1,12 @@
 package com.jquartz.rich.validation.core.expression;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.rule.ClassField;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.jquartz.rich.validation.core.api.textual.Tokens.ENSURE_THAT;
 import static com.jquartz.rich.validation.core.api.textual.Tokens.WHEN;
@@ -36,5 +40,12 @@ public class ConditionalExpression<T> {
     @Override
     public String toString() {
         return getTextualRepresentation();
+    }
+
+    public Collection<ClassField<T>> getAccomplices() {
+        return Stream
+                .of(condition.getAccomplices(), mustBe.getAccomplices())
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 }

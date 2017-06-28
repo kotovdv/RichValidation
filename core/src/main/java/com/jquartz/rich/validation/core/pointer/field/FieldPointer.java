@@ -7,4 +7,8 @@ public interface FieldPointer<T, S> extends Pointer {
     T resolve(S source);
 
     Class<T> getPointedClass();
+
+    Class<S> getSourceClass();
+
+    String getFieldName();
 }
