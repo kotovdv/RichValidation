@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.jquartz.rich.validation.core.api.textual.Tokens.OTHERWISE;
 import static com.jquartz.rich.validation.core.evaluation.TruthValue.*;
@@ -61,16 +62,13 @@ public class LogicalElseJunction<T> extends AbstractExpression<T> {
     }
 
     @Override
-    public String toString() {
-        return getTextualRepresentation();
-    }
-
-    @Override
     public Collection<ClassField<?, T>> getAccomplices() {
-        return expressions.stream()
+        Stream<ClassField<?, T>> expressionAccomplicesStream = expressions.stream()
                 .map(ConditionalExpression::getAccomplices)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        //TODO ADD OTHERWISE
+                .flatMap(Collection::stream);
+
+        Stream<ClassField<?, T>> otherwiseAccomplicesStream = otherwise.getAccomplices().stream();
+
+        return Stream.concat(expressionAccomplicesStream, otherwiseAccomplicesStream).collect(Collectors.toList());
     }
 }

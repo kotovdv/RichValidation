@@ -19,9 +19,4 @@ public class LogicalAndJunction<T> extends LogicalOperatorJunction<T> {
     public String getTextualRepresentation() {
         return Joiner.on(" " + Tokens.AND.toString() + " ").join(junctions);
     }
-
-    @Override
-    public String toString() {
-        return getTextualRepresentation();
-    }
 }

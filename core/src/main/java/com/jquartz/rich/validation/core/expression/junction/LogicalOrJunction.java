@@ -19,9 +19,4 @@ public class LogicalOrJunction<T> extends LogicalOperatorJunction<T> {
     public String getTextualRepresentation() {
         return Joiner.on(" " + Tokens.OR.toString() + " ").join(junctions);
     }
-
-    @Override
-    public String toString() {
-        return getTextualRepresentation();
-    }
 }

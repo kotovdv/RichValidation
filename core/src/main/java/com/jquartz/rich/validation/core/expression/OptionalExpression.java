@@ -29,9 +29,4 @@ public class OptionalExpression<T> extends AbstractExpression<T> {
     public Collection<ClassField<?, T>> getAccomplices() {
         return Collections.emptyList();
     }
-
-    @Override
-    public String toString() {
-        return getTextualRepresentation();
-    }
 }

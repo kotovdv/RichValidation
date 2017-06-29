@@ -31,9 +31,4 @@ public abstract class UnaryExpression<T, O extends Pointer> extends AbstractExpr
         return operand.getTextualRepresentation() + " "
                 + action.getTextualRepresentation() + " ";
     }
-
-    @Override
-    public String toString() {
-        return getTextualRepresentation();
-    }
 }

@@ -38,9 +38,4 @@ public abstract class BinaryExpression<T, L extends Pointer, R extends Pointer> 
     protected abstract Object resolveLeftOperand(L leftOperand, T source);
 
     protected abstract Object resolveRightOperand(R rightOperand, T source);
-
-    @Override
-    public String toString() {
-        return getTextualRepresentation();
-    }
 }
