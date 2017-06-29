@@ -1,6 +1,7 @@
 package com.jquartz.rich.validation.core.expression.comparison.factory;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.evaluation.trust.TrustworthinessStub;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.pointer.field.FieldPointer;
 import com.jquartz.rich.validation.core.pointer.field.PlainFieldPointer;
@@ -38,7 +39,7 @@ public class ComparisonExpressionFactoryTest {
                 NOT_EQUAL_TO,
                 literalPointer);
 
-        assertThat(expression.apply(subject)).isEqualTo(TruthValue.TRUE);
+        assertThat(expression.apply(subject, TrustworthinessStub.INSTANCE)).isEqualTo(TruthValue.TRUE);
     }
 
 
@@ -60,7 +61,7 @@ public class ComparisonExpressionFactoryTest {
                 EQUAL_TO,
                 literalPointer);
 
-        assertThat(expression.apply(subject)).isEqualTo(TruthValue.TRUE);
+        assertThat(expression.apply(subject, TrustworthinessStub.INSTANCE)).isEqualTo(TruthValue.TRUE);
     }
 
     private FieldPointer<Double, FloatingPointSubject> createFieldPointer() throws NoSuchFieldException {

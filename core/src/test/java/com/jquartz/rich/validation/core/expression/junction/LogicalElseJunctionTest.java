@@ -1,6 +1,7 @@
 package com.jquartz.rich.validation.core.expression.junction;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.evaluation.trust.TrustworthinessStub;
 import com.jquartz.rich.validation.core.expression.ConditionalExpression;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.base.binary.LiteralToLiteralBinaryExpression;
@@ -82,6 +83,6 @@ public class LogicalElseJunctionTest {
     public void testElseJunction(LogicalElseJunction<Object> junction, TruthValue expectedTargetResult) throws Exception {
         Object mockSubject = new Object();
 
-        assertThat(junction.apply(mockSubject)).isEqualTo(expectedTargetResult);
+        assertThat(junction.apply(mockSubject, TrustworthinessStub.INSTANCE)).isEqualTo(expectedTargetResult);
     }
 }

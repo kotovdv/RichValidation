@@ -40,7 +40,7 @@ public class LogicalElseJunction<T> extends AbstractExpression<T> {
     public TruthValue apply(T subject, Trustworthiness trustworthiness) {
         TruthValue hadApplicableExpression = FALSE;
         for (ConditionalExpression<T> expression : expressions) {
-            TruthValue applicability = expression.isApplicable(subject);
+            TruthValue applicability = expression.isApplicable(subject, trustworthiness);
             if (applicability == TRUE) {
                 return expression.apply(subject, trustworthiness);
             }

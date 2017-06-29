@@ -2,6 +2,7 @@ package com.jquartz.rich.validation.core;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
+import com.jquartz.rich.validation.core.evaluation.trust.TrustworthinessStub;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.rule.ClassField;
 
@@ -24,7 +25,7 @@ public class Rule<T> {
     }
 
     public TruthValue validate(T instance) {
-        return expression.apply(instance);
+        return expression.apply(instance, TrustworthinessStub.INSTANCE);
     }
 
     public TruthValue validate(T instance, Trustworthiness trustworthiness) {

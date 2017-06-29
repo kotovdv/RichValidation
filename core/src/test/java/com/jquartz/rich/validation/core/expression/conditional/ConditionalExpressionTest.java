@@ -13,6 +13,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static com.jquartz.rich.validation.core.evaluation.trust.TrustworthinessStub.INSTANCE;
 import static com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator.GREATER_THAN;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -52,7 +53,7 @@ public class ConditionalExpressionTest {
         Object mockSubject = new Object();
         ConditionalExpression<Object> conditionalExpression = new ConditionalExpression<>(condition, target);
 
-        assertThat(conditionalExpression.isApplicable(mockSubject)).isEqualTo(expectedConditionResult);
-        assertThat(conditionalExpression.apply(mockSubject)).isEqualTo(expectedTargetResult);
+        assertThat(conditionalExpression.isApplicable(mockSubject, INSTANCE)).isEqualTo(expectedConditionResult);
+        assertThat(conditionalExpression.apply(mockSubject, INSTANCE)).isEqualTo(expectedTargetResult);
     }
 }

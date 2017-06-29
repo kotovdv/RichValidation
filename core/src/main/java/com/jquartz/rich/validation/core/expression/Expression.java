@@ -8,11 +8,9 @@ import java.util.Collection;
 
 public interface Expression<T> {
 
-    TruthValue apply(T subject);
-
     TruthValue apply(T subject, Trustworthiness trustworthiness);
 
-    String getTextualRepresentation();
-
     Collection<ClassField<?, T>> getAccomplices();
+
+    String getTextualRepresentation();
 }

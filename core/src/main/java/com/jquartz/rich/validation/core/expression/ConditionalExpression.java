@@ -25,12 +25,8 @@ public class ConditionalExpression<T> {
         this.mustBe = mustBe;
     }
 
-    public TruthValue isApplicable(@Nonnull T subject) {
-        return condition.apply(subject);
-    }
-
-    public TruthValue apply(@Nonnull T subject) {
-        return mustBe.apply(subject);
+    public TruthValue isApplicable(@Nonnull T subject, Trustworthiness trustworthiness) {
+        return condition.apply(subject, trustworthiness);
     }
 
     public TruthValue apply(@Nonnull T subject, Trustworthiness trustworthiness) {
