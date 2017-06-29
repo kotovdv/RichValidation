@@ -1,6 +1,6 @@
 package com.jquartz.rich.validation.core.api.dsl.conjunction;
 
-import com.jquartz.rich.validation.core.Rule;
+import com.jquartz.rich.validation.core.rule.Rule;
 import com.jquartz.rich.validation.core.api.dsl.is.IsPartBuilder;
 import com.jquartz.rich.validation.core.api.dsl.logic.RuleLogicBuilder;
 

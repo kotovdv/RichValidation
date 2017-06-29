@@ -2,6 +2,7 @@ package com.jquartz.rich.validation.core;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
+import com.jquartz.rich.validation.core.rule.Rule;
 import com.jquartz.rich.validation.core.subject.ComparisonResultSubject;
 import com.jquartz.rich.validation.core.subject.PersonSubject;
 import com.tngtech.java.junit.dataprovider.DataProvider;

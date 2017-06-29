@@ -6,8 +6,5 @@ import com.jquartz.rich.validation.core.rule.ClassField;
  * @author Dmitriy Kotov
  */
 public interface Trustworthiness {
-
-    boolean isNotTrustworthy(ClassField<?, ?> target);
-
     boolean isTrustworthy(ClassField<?, ?> targetField);
 }

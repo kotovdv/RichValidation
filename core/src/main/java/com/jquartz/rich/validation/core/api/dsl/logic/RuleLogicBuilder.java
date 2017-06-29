@@ -1,6 +1,6 @@
 package com.jquartz.rich.validation.core.api.dsl.logic;
 
-import com.jquartz.rich.validation.core.Rule;
+import com.jquartz.rich.validation.core.rule.Rule;
 import com.jquartz.rich.validation.core.expression.ConditionalExpression;
 import com.jquartz.rich.validation.core.expression.Expression;
 import com.jquartz.rich.validation.core.expression.OptionalExpression;

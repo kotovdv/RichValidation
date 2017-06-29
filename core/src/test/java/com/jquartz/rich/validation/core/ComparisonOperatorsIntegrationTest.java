@@ -1,6 +1,7 @@
 package com.jquartz.rich.validation.core;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
+import com.jquartz.rich.validation.core.rule.Rule;
 import com.jquartz.rich.validation.core.subject.BigIntegerFieldSubject;
 import com.jquartz.rich.validation.core.subject.SingleFieldSubject;
 import com.jquartz.rich.validation.core.subject.TwoFieldsSubject;

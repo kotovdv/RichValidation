@@ -1,10 +1,9 @@
-package com.jquartz.rich.validation.core;
+package com.jquartz.rich.validation.core.rule;
 
 import com.jquartz.rich.validation.core.evaluation.TruthValue;
 import com.jquartz.rich.validation.core.evaluation.trust.Trustworthiness;
 import com.jquartz.rich.validation.core.evaluation.trust.TrustworthinessStub;
 import com.jquartz.rich.validation.core.expression.Expression;
-import com.jquartz.rich.validation.core.rule.ClassField;
 
 import java.util.Collection;
 
