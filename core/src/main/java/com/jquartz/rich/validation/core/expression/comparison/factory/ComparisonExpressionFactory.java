@@ -7,7 +7,6 @@ import com.jquartz.rich.validation.core.expression.base.binary.action.comparison
 import com.jquartz.rich.validation.core.expression.comparison.factory.exception.IncomparableClassesException;
 import com.jquartz.rich.validation.core.expression.comparison.factory.exception.NotComparableClassException;
 import com.jquartz.rich.validation.core.expression.comparison.factory.transformation.Transformation;
-import com.jquartz.rich.validation.core.expression.comparison.factory.transformation.TransformationLogic;
 import com.jquartz.rich.validation.core.expression.comparison.operator.ComparisonOperator;
 import com.jquartz.rich.validation.core.pointer.field.FieldPointer;
 import com.jquartz.rich.validation.core.pointer.field.TransformedFieldPointer;
@@ -25,9 +24,9 @@ import static com.jquartz.rich.validation.core.expression.comparison.factory.tra
  */
 public class ComparisonExpressionFactory {
 
-    private final TransformationLogic<Long> numberToLong = createTransformation(Number::longValue, Long.class);
-    private final TransformationLogic<BigDecimal> numberToBigDecimal = createTransformation(number -> new BigDecimal(number.toString()), BigDecimal.class);
-    private final TransformationLogic<BigInteger> numberToBigInteger = createTransformation(number -> new BigInteger(number.toString()), BigInteger.class);
+    private final Transformation<Long> numberToLong = createTransformation(Number::longValue, Long.class);
+    private final Transformation<BigDecimal> numberToBigDecimal = createTransformation(number -> new BigDecimal(number.toString()), BigDecimal.class);
+    private final Transformation<BigInteger> numberToBigInteger = createTransformation(number -> new BigInteger(number.toString()), BigInteger.class);
 
     public <T extends Comparable<T>, S> Expression<S> create(FieldPointer<?, S> left,
                                                              ComparisonOperator operator,
@@ -38,28 +37,28 @@ public class ComparisonExpressionFactory {
                 ? right.getPointedClass().get()
                 : leftClass;
 
-        TransformationLogic<T> logic = generateTransformationLogic(leftClass, rightClass);
+        Transformation<T> transformation = generateTransformationLogic(leftClass, rightClass);
 
         return new FieldToLiteralBinaryExpression<>(
-                new TransformedFieldPointer<>(left, logic.getLeftTransformation()),
-                new ComparisonAction<>(operator, logic.getResultingClass()),
-                new TransformedLiteralPointer<>(right, logic.getRightTransformation())
+                new TransformedFieldPointer<>(left, transformation),
+                new ComparisonAction<>(operator, transformation.getResultingType()),
+                new TransformedLiteralPointer<>(right, transformation)
         );
     }
 
     public <T extends Comparable<T>, S> Expression<S> create(FieldPointer<?, S> left,
                                                              ComparisonOperator operator,
                                                              FieldPointer<?, S> right) {
-        TransformationLogic<T> logic = generateTransformationLogic(left.getPointedClass(), right.getPointedClass());
+        Transformation<T> transformation = generateTransformationLogic(left.getPointedClass(), right.getPointedClass());
 
         return new FieldToFieldBinaryExpression<>(
-                new TransformedFieldPointer<>(left, logic.getLeftTransformation()),
-                new ComparisonAction<>(operator, logic.getResultingClass()),
-                new TransformedFieldPointer<>(right, logic.getRightTransformation())
+                new TransformedFieldPointer<>(left, transformation),
+                new ComparisonAction<>(operator, transformation.getResultingType()),
+                new TransformedFieldPointer<>(right, transformation)
         );
     }
 
-    private <T extends Comparable<T>> TransformationLogic<T> generateTransformationLogic(final Class<?> initialLeftClass, final Class<?> initialRightClass) {
+    private <T extends Comparable<T>> Transformation<T> generateTransformationLogic(final Class<?> initialLeftClass, final Class<?> initialRightClass) {
         Class<?> left = wrapPrimitive(initialLeftClass);
         Class<?> right = wrapPrimitive(initialRightClass);
 
@@ -105,19 +104,19 @@ public class ComparisonExpressionFactory {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends Comparable<T>> TransformationLogic<T> emptyTransformation(Class<?> targetClass) {
-        return new TransformationLogic(new Transformation<>(targetClass), new Transformation<>(targetClass), targetClass);
+    private <T extends Comparable<T>> Transformation<T> emptyTransformation(Class<?> targetClass) {
+        return (Transformation<T>) new Transformation<>(targetClass);
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends Comparable<T>> TransformationLogic<T> transformToIntegerNumber(Class<?> left, Class<?> right) {
+    private <T extends Comparable<T>> Transformation<T> transformToIntegerNumber(Class<?> left, Class<?> right) {
         return BigInteger.class.equals(left) || BigInteger.class.equals(right)
-                ? (TransformationLogic<T>) numberToBigInteger
-                : (TransformationLogic<T>) numberToLong;
+                ? (Transformation<T>) numberToBigInteger
+                : (Transformation<T>) numberToLong;
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends Comparable<T>> TransformationLogic<T> transformToFloatingPointNumber() {
-        return (TransformationLogic<T>) numberToBigDecimal;
+    private <T extends Comparable<T>> Transformation<T> transformToFloatingPointNumber() {
+        return (Transformation<T>) numberToBigDecimal;
     }
 }
