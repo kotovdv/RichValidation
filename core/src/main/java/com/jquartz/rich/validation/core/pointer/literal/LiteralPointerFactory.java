@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 public class LiteralPointerFactory {
 
-    public <V> LiteralPointer<Object> create(@Nullable V value) {
+    public <V> LiteralPointer<?> create(@Nullable V value) {
         return createLiteralPointer(value, value != null ? value.getClass() : null);
     }
 

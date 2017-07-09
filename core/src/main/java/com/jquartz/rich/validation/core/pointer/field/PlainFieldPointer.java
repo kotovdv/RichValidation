@@ -15,11 +15,11 @@ public class PlainFieldPointer<T, S> implements FieldPointer<T, S> {
         this.field = field;
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public T resolve(S source) {
         try {
-            return (T) field.get(source);
-        } catch (IllegalAccessException e) {
+            return target.getFieldClass().cast(field.get(source));
+        } catch (IllegalAccessException | ClassCastException e) {
             throw new FailedToExtractFieldValueException(target.getSourceClass(), field.getName(), e);
         }
     }

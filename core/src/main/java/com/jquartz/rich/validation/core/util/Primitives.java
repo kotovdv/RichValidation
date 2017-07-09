@@ -6,9 +6,9 @@ import com.jquartz.rich.validation.core.util.exception.NoWrapperForPrimitiveType
 /**
  * @author Dmitriy Kotov
  */
-public class PrimitiveToWrapperConverter {
+public class Primitives {
 
-    private final ImmutableMap<Class<?>, Class<?>> primitiveToWrapperMapping = ImmutableMap.<Class<?>, Class<?>>builder()
+    private static final ImmutableMap<Class<?>, Class<?>> primitiveToWrapperMapping = ImmutableMap.<Class<?>, Class<?>>builder()
             .put(boolean.class, Boolean.class)
             .put(char.class, Character.class)
             .put(byte.class, Byte.class)
@@ -19,7 +19,7 @@ public class PrimitiveToWrapperConverter {
             .put(double.class, Double.class)
             .build();
 
-    public Class<?> getWrapperFor(Class<?> primitiveType) {
+    public static Class<?> getWrapperFor(Class<?> primitiveType) {
         Class<?> wrapperType = primitiveToWrapperMapping.get(primitiveType);
         if (wrapperType == null) {
             throw new NoWrapperForPrimitiveTypeFoundException(primitiveType);

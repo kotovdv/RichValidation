@@ -31,7 +31,7 @@ public class ComparisonExpressionFactoryTest {
     public void testFloatToDoubleComparison() throws Exception {
         FloatingPointSubject subject = new FloatingPointSubject(10.4);
         FieldPointer<Double, FloatingPointSubject> fieldPointer = createFieldPointer();
-        LiteralPointer<Float> literalPointer = new PlainLiteralPointer<>(10.5F, Float.TYPE);
+        LiteralPointer<Float> literalPointer = new PlainLiteralPointer<>(10.5F, Float.class);
 
 
         Expression<FloatingPointSubject> expression = comparisonExpressionFactory.create(
@@ -54,7 +54,7 @@ public class ComparisonExpressionFactoryTest {
     public void testFloatWithDoubleComparison() throws Exception {
         FloatingPointSubject subject = new FloatingPointSubject(0.1D);
         FieldPointer<Double, FloatingPointSubject> fieldPointer = createFieldPointer();
-        PlainLiteralPointer<Float> literalPointer = new PlainLiteralPointer<>(0.1F, Float.TYPE);
+        PlainLiteralPointer<Float> literalPointer = new PlainLiteralPointer<>(0.1F, Float.class);
 
         Expression<FloatingPointSubject> expression = comparisonExpressionFactory.create(
                 fieldPointer,
@@ -69,6 +69,6 @@ public class ComparisonExpressionFactoryTest {
         Field field = targetClass.getDeclaredField(FIELD);
         field.setAccessible(true);
 
-        return new PlainFieldPointer<>(new ClassField<>(targetClass, Double.TYPE, field.getName()), field);
+        return new PlainFieldPointer<>(new ClassField<>(targetClass, Double.class, field.getName()), field);
     }
 }

@@ -13,7 +13,7 @@ import com.jquartz.rich.validation.core.pointer.field.FieldPointer;
 import com.jquartz.rich.validation.core.pointer.field.TransformedFieldPointer;
 import com.jquartz.rich.validation.core.pointer.literal.LiteralPointer;
 import com.jquartz.rich.validation.core.pointer.literal.TransformedLiteralPointer;
-import com.jquartz.rich.validation.core.util.PrimitiveToWrapperConverter;
+import com.jquartz.rich.validation.core.util.Primitives;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -25,7 +25,6 @@ import static com.jquartz.rich.validation.core.expression.comparison.factory.tra
  */
 public class ComparisonExpressionFactory {
 
-    private final PrimitiveToWrapperConverter toWrapperConverter = new PrimitiveToWrapperConverter();
     private final TransformationLogic<Long> numberToLong = createTransformation(Number::longValue, Long.class);
     private final TransformationLogic<BigDecimal> numberToBigDecimal = createTransformation(number -> new BigDecimal(number.toString()), BigDecimal.class);
     private final TransformationLogic<BigInteger> numberToBigInteger = createTransformation(number -> new BigInteger(number.toString()), BigInteger.class);
@@ -101,7 +100,7 @@ public class ComparisonExpressionFactory {
 
     private Class<?> wrapPrimitive(Class<?> initialClass) {
         return initialClass.isPrimitive()
-                ? toWrapperConverter.getWrapperFor(initialClass)
+                ? Primitives.getWrapperFor(initialClass)
                 : initialClass;
     }
 
