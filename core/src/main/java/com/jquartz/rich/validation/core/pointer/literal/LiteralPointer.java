@@ -8,5 +8,5 @@ public interface LiteralPointer<T> extends Pointer {
 
     T resolve();
 
-    Optional<Class<T>> getPointedClass();
+    Optional<Class<? extends T>> getPointedClass();
 }

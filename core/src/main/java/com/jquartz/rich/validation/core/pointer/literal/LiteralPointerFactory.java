@@ -1,13 +1,14 @@
 package com.jquartz.rich.validation.core.pointer.literal;
 
+import javax.annotation.Nullable;
+
 public class LiteralPointerFactory {
 
-    @SuppressWarnings("unchecked")
-    public <V> LiteralPointer<V> create(V value) {
-        Class<V> type = value != null
-                ? (Class<V>) value.getClass()
-                : null;
+    public <V> LiteralPointer<Object> create(@Nullable V value) {
+        return createLiteralPointer(value, value != null ? value.getClass() : null);
+    }
 
-        return new PlainLiteralPointer<>(value, type);
+    private <V> LiteralPointer<V> createLiteralPointer(V value, @Nullable Class<? extends V> valueType) {
+        return new PlainLiteralPointer<>(value, valueType);
     }
 }

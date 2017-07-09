@@ -30,7 +30,7 @@ public class PlainFieldPointer<T, S> implements FieldPointer<T, S> {
     }
 
     @Override
-    public Class<T> getPointedClass() {
+    public Class<? extends T> getPointedClass() {
         return target.getFieldClass();
     }
 

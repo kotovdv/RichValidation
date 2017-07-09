@@ -6,9 +6,9 @@ import java.util.Optional;
 public class PlainLiteralPointer<T> implements LiteralPointer<T> {
 
     private final T value;
-    private final Class<T> pointedClass;
+    private final Class<? extends T> pointedClass;
 
-    public PlainLiteralPointer(T value, Class<T> pointedClass) {
+    public PlainLiteralPointer(T value, Class<? extends T> pointedClass) {
         this.value = value;
         this.pointedClass = pointedClass;
     }
@@ -18,7 +18,7 @@ public class PlainLiteralPointer<T> implements LiteralPointer<T> {
     }
 
     @Override
-    public Optional<Class<T>> getPointedClass() {
+    public Optional<Class<? extends T>> getPointedClass() {
         return Optional.ofNullable(pointedClass);
     }
 

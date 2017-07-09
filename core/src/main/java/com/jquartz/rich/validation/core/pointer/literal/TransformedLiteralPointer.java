@@ -20,7 +20,7 @@ public class TransformedLiteralPointer<T> implements LiteralPointer<T> {
     }
 
     @Override
-    public Optional<Class<T>> getPointedClass() {
+    public Optional<Class<? extends T>> getPointedClass() {
         return initialPointer.getPointedClass().isPresent()
                 ? Optional.of(transformationSequence.getResultingType())
                 : Optional.empty();

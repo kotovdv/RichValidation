@@ -9,7 +9,7 @@ public interface FieldPointer<T, S> extends Pointer {
 
     ClassField<T, S> getTarget();
 
-    Class<T> getPointedClass();
+    Class<? extends T> getPointedClass();
 
     Class<S> getSourceClass();
 
