@@ -38,6 +38,9 @@ Requirements are:
 These requirements can easily be pictured in form of a rules, using RichValidation API.
 
 ```
+import static com.jquartz.rich.validation.core.api.dsl.RuleBuilder.ensureThat;
+...
+
 Rule<AttractionVisitor> heightTestRule = ensureThat(AttractionVisitor.class)
                 .field("height")
                 .isGreaterOrCoequalTo(150)
